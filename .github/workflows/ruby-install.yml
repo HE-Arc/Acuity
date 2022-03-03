@@ -1,0 +1,17 @@
+name: Ruby Install
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@c2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with: 
+          bundler-cache: true
