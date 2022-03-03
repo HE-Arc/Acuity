@@ -19,5 +19,5 @@ jobs:
       - name: Install SSH key
         uses: webfactory/ssh-agent@v0.5.4
         with:
-          ssh-private-key: ${{ secret.SSH_KEY }}
+          ssh-private-key: ${{ secrets.SSH_KEY }}
 
