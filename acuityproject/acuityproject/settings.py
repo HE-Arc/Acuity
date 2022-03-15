@@ -27,8 +27,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTIFICATION_CLASSES':{
+        'rest_framework.authentification.TokenAuthentification',
+    },
+    'DEFAULT_PERMISSION_CLASSES':{
+        'rest_framework.permissions.IsAuthenticated',
+    }
+}
+
 
 # Application definition
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,7 +48,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'acuityapp'
+    'acuityapp',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -48,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'acuityproject.urls'
