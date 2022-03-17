@@ -60,6 +60,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     email = models.EmailField(_('email address'), blank=True,unique=True)
     profile = models.CharField(_('profile'), max_length=255, blank=True) # add
+    
+    score_mean = models.FloatField(default=3.0)
+    
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
@@ -85,6 +88,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+        
+    def update_mean(self):
+        assess = Assess.objects.filter(toUser=self)
+        self.score_mean = sum((a.score for a in assess))/len(assess)
+        self.save()
 
     def clean(self):
         super().clean()
