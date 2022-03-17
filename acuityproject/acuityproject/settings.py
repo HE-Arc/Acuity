@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,21 +26,20 @@ SECRET_KEY = 'django-insecure-&-6d0v7ll5(*af++^h_+##xw51+wims7v_i39f^hve=!gda16-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kubernetes.docker.internal','localhost']
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTIFICATION_CLASSES':{
-        'rest_framework.authentification.TokenAuthentification',
-    },
-    'DEFAULT_PERMISSION_CLASSES':{
-        'rest_framework.permissions.IsAuthenticated',
-    }
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
 }
 
 
 # Application definition
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+AUTH_USER_MODEL = 'acuityapp.User'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
-    'corsheaders'
+    'corsheaders',
 ]
 
 MIDDLEWARE = [

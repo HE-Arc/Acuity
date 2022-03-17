@@ -3,8 +3,8 @@
         <h1>Acuity</h1>
         <h3>Log in</h3>
         <q-form ref="form" :rules="rules">
-            <q-form-item label="Username" prop="username">
-                <q-input v-model="username" type="text"/>
+            <q-form-item label="Email" prop="email">
+                <q-input v-model="email" type="text"/>
             </q-form-item>
             <q-form-item label="Password" prop="password">
                 <q-input v-model="password" type="password"/>
@@ -24,13 +24,13 @@ export default {
 
     data() {
         return{
-            username: '',
+            email: '',
             password: '',
 
             isLoading: false,
 
             rules: {
-                username: [
+                email: [
                     { required: true }
                 ],
                 password: {
@@ -44,8 +44,8 @@ export default {
             this.isLoading = true;
 
             const formData = {
-                username: this.username,
                 password: this.password,
+                email: this.email
             }
 
             axios.post('http://localhost:8000/api/token/login', formData)

@@ -7,19 +7,34 @@ from django.utils.decorators import method_decorator
 # for sending response to the client
 from django.http import HttpResponse, JsonResponse
 # API definition for task
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer, AssessSerializer
 # Task model
-from .models import Task, Assess
+from .models import Task, Assess, User
 
-from django.views import generic, View
+from rest_framework.views import APIView
+from rest_framework.decorators import action
+from rest_framework import permissions
+from rest_framework.response import Response 
+from django.conf import settings
 
 # Create your views here.
 
 from django.utils.decorators import method_decorator
+from rest_framework import viewsets, status
 
-class AssessCreateView(generic.CreateView):
-    model = Assess
-    fields = ['score']
+class AssessViewSet(viewsets.ModelViewSet):
+    queryset = Assess.objects.all()
+    serializer_class = AssessSerializer
+    #permission_classes = [permissions.IsAuthenticated]
+    
+    def create(self, validated_data):
+        user = validated_data.user
+        toUser = User.objects.get(pk=validated_data.data['toUser'])
+        score = validated_data.data['score']  
+        comment = validated_data.data['comment']
+        Assess.objects.create(fromUser=user, toUser=toUser, score=score, comment=comment).save()
+        
+        return Response({'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
 
 @csrf_exempt
 def tasks(request):

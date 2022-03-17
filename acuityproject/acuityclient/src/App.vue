@@ -1,9 +1,5 @@
 <template>
   <div id="main">
-    <router-link to="/">go home</router-link>
-    <router-link to="/about">go about</router-link>
-    <router-link to="/log-in">Log in</router-link>
-    <router-link to="/sign-up">Sign up</router-link>
     <router-view></router-view>
   </div>
 </template>

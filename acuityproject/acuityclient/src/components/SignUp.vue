@@ -3,8 +3,11 @@
         <h1>Acuity</h1>
         <h3>Sign up</h3>
         <q-form ref="form" :rules="rules">
-            <q-form-item label="Username" prop="username">
-                <q-input v-model="username" type="text"/>
+            <q-form-item label="First name" prop="firstName">
+                <q-input v-model="firstName" type="text"/>
+            </q-form-item>
+            <q-form-item label="Last name" prop="lastName">
+                <q-input v-model="lastName" type="text"/>
             </q-form-item>
             <q-form-item label="E-mail" prop="email">
                 <q-input v-model="email" type="email"/>
@@ -25,14 +28,18 @@ export default {
     name: 'SignUp',
     data() {
         return{
-            username: '',
+            lastName: '',
+            firstName: '',
             password: '',
             email: '',
 
             isLoading: false,
 
             rules: {
-                username: { 
+                lastName: { 
+                    required: true
+                },
+                firstName: { 
                     required: true
                 },
                 password: {
@@ -47,7 +54,8 @@ export default {
     methods: {
         submitForm(){
             const formData = {
-                username: this.username,
+                last_name: this.lastName,
+                first_name: this.firstName,
                 email: this.email,
                 password: this.password,
             }

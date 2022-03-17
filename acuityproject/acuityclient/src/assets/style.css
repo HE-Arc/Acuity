@@ -12,27 +12,83 @@ html, body{
 #app, #main{
     height: 100%;
     margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.header{
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: left;
+    height: 10%;
+    display: flex;
+    align-items: center;
 }
 
 .log-in{
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 20px;
 }
 
+.assess{
+    height: 90%;
+}
+
 .assess-counter{
-    font-size: 50pt;
+    font-size: 80pt;
     margin: 40px;
 }
 
 #main .assess .assess-control{
-    max-height: 100px;
-    height: 100px;
-    width: 100px;
+    max-height: 130px;
+    height: 130px;
+    width: 130px;
     box-shadow: -12px -12px 36px var(--color-tertiary-white), 12px 12px 24px rgb(var(--color-rgb-blue) / 40%), 3px 3px 9px rgb(var(--color-rgb-blue) / 40%), -3px -3px 9px rgb(var(--color-rgb-white) / 25%);
-    font-size: 60px;
+    font-size: 80px;
     background-color: #eaeaea00;
 }
+
+#main .assess .assess-send{
+    width: 80%;
+    font-size: 25pt;
+    max-height: 70px;
+    height: 70px;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20%;
+    vertical-align:middle;
+    margin: 0;
+}
+
+textarea{
+    font-size: 18pt !important;
+    border-width: 0;
+    padding: 20px;
+    border-radius: 10px;
+    height: 70%;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: -1px -1px 3px rgb(var(--color-rgb-white) / 25%), 1px 1px 3px rgb(var(--color-rgb-blue) / 40%), 4px 4px 8px rgb(var(--color-rgb-blue) / 40%), -4px -4px 12px var(--color-tertiary-white);;
+}
+
+textarea.focus-visible{
+    outline-width: 0;
+}
+
+.w80{width: 80%;}
+
+.h20{height: 20%;}
+
+.h60{height: 60%;}
