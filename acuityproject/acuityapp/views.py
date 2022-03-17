@@ -34,8 +34,7 @@ class AssessViewSet(viewsets.ModelViewSet):
         comment = validated_data.data['comment']
         Assess.objects.create(fromUser=user, toUser=toUser, score=score, comment=comment).save()
         
-        
-        print(toUser.update_mean())
+        toUser.update_mean()
         
         return Response({'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
 
