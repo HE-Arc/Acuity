@@ -13,3 +13,8 @@ class AssessSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Assess
         fields = ['url', 'score', 'fromUser', 'toUser']
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['score_mean', 'first_name', 'last_name']
