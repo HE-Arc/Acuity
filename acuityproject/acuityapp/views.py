@@ -26,13 +26,17 @@ from rest_framework import viewsets, status
 class AssessViewSet(viewsets.ModelViewSet):
     queryset = Assess.objects.all()
     serializer_class = AssessSerializer
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     
-    def create(self, validated_data):
+    def create(self, validated_data):        
         user = validated_data.user
-        toUser = User.objects.get(pk=validated_data.data['toUser'])
+        toUser = User.objects.get(pk=validated_data.data['toUser'])        
         score = validated_data.data['score']  
         comment = validated_data.data['comment']
+         
+        if user == toUser:
+            return Response({'status': status.HTTP_401_UNAUTHORIZED}, status=status.HTTP_401_UNAUTHORIZED)
+        
         Assess.objects.create(fromUser=user, toUser=toUser, score=score, comment=comment).save()
         
         toUser.update_mean()
@@ -42,7 +46,6 @@ class AssessViewSet(viewsets.ModelViewSet):
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-        
 
 @csrf_exempt
 def tasks(request):

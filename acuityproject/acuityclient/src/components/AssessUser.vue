@@ -3,7 +3,7 @@
         <close-header></close-header>
 
         <div class="column">
-            <div class='item h20'><q-button @click="$router.push('/')" theme="link"><h1>{{user.firstName+" "+user.lastName}}</h1></q-button></div>
+            <div class='item h20'><q-button @click="$router.push('/users/'+user.id)" theme="link"><h1>{{user.firstName+" "+user.lastName}}</h1></q-button></div>
             
             <template v-if="!isCommenting">
                 <div class="item h20"><q-button @click="updateScore(1)" :disabled="score >= max" class="assess-control" theme="secondary" type="icon" icon="q-icon-triangle-up" circle></q-button></div>
@@ -62,8 +62,6 @@ export default {
                     this.user.firstName = response.data.first_name
                     this.user.lastName = response.data.last_name
                     this.user.email = response.data.email
-
-                    console.log(this.user.email)
                 })
                 .catch(error => {
                     console.log(error)
@@ -83,11 +81,9 @@ export default {
                 comment: this.comment,
             }
 
-            console.log(axios.defaults.headers)
-
             axios.post('http://localhost:8000/api/assess/', data)
-                .then(response => {
-                    console.log(response)
+                .then(()=>{
+                    this.$router.push('/users/'+this.user.id)
                 })
                 .catch(error => {
                     console.log(error)
