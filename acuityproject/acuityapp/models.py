@@ -83,7 +83,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = 'email' # fix
     USERNAME_FIELD = 'email' # fix
-    REQUIRED_FIELDS = ['first_name', 'last_name'] # fix
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'score_mean'] # fix
 
     class Meta:
         verbose_name = _('user')
