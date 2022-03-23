@@ -1,4 +1,5 @@
 from django.shortcuts import render
+# from html5lib import serialize
 # parsing data from the client
 from rest_framework.parsers import JSONParser
 # To bypass having a CSRF token
@@ -7,7 +8,7 @@ from django.utils.decorators import method_decorator
 # for sending response to the client
 from django.http import HttpResponse, JsonResponse
 # API definition for task
-from .serializers import TaskSerializer, AssessSerializer
+from .serializers import TaskSerializer, AssessSerializer, UserSerializer
 # Task model
 from .models import Task, Assess, User
 
@@ -42,6 +43,9 @@ class AssessViewSet(viewsets.ModelViewSet):
         
         return Response({'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
 
+class UsersViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 @csrf_exempt
 def tasks(request):

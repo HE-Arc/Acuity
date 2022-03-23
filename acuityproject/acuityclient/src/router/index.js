@@ -5,6 +5,7 @@ import LogIn from '../components/LogIn.vue'
 import SignUp from '../components/SignUp.vue'
 import AssessUser from '../components/AssessUser.vue'
 import OthersProfile from '../components/OthersProfile.vue'
+import HomePage from '../components/HomePage.vue'
 
 const About = { template: '<div>About</div>' }
 const NotFound = { template: '<div>Not Found</div>'}
@@ -17,6 +18,7 @@ const routes = [
     { path: '/sign-up', component: SignUp},
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
     { path: '/assess/:id', component: AssessUser},
+    { path: 'home-page', component: HomePage}
 ]
 
 const router = createRouter({
