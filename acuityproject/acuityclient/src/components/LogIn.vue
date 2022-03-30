@@ -47,7 +47,7 @@ export default {
                 password: this.password,
                 email: this.email
             }
-
+            console.log(formData)
             axios.post('http://localhost:8000/api/token/login', formData)
                 .then(response => {
                     console.log(response)

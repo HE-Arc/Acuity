@@ -72,7 +72,7 @@ class AssessViewSet(viewsets.ModelViewSet):
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     
     @action(detail=True, methods=['get'])
     def assess(self, request, pk):
@@ -83,7 +83,20 @@ class UsersViewSet(viewsets.ModelViewSet):
         
         serializer = AssessSerializer(assess, context={'request':request}, many=True)
         return JsonResponse(serializer.data, safe=False)
-
+    
+    def create(self, validated_data):   
+        validated_data = validated_data.data
+        User.objects.create_user(validated_data['first_name'],
+                    validated_data['last_name'], 
+                    validated_data['email'], 
+                    validated_data['password'])
+        
+        
+        
+        return Response({'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
+        
+        
+    
 @csrf_exempt
 def tasks(request):
     if(request.method == 'GET'):
