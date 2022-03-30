@@ -44,7 +44,7 @@ export default {
                 firstName: { 
                     required: true
                 },
-                passwordP: {
+                password: {
                     required: true
                 },
                 emailP: {

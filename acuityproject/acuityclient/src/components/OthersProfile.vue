@@ -4,9 +4,22 @@
 
         <div class="column">
             <div class='item h20'><h1 theme="link">{{user.firstName+" "+user.lastName}}</h1></div>
-            <div class="item h20 assess-counter">{{user.scoreMean}}</div>
+            <div class="item h20 assess-counter">{{user.scoreMean.toFixed(1)}}</div>
 
-            <div class="item h20"><q-button class='assess-send' @click="isCommenting=true">Continue</q-button></div>
+            <div class="column item h60 comments-container">
+
+                <div class="scrollable w80">
+                    <div class="w100 comment-box" v-for="a in assess" :key="a">
+                    
+                        <p :class="{border: a.comment == ''}" class="title">
+                            <q-button theme="link">{{a.fromUser.first_name}} {{a.fromUser.last_name}}</q-button> 
+                            <label class="accent-text">{{a.score}}</label>
+                        </p>
+                        <p v-if="a.comment != ''" class="comment">{{a.comment}}</p>
+                            
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -26,11 +39,13 @@ export default {
                 lastName: '',
                 email: '',
                 scoreMean: -1,
-            }
+            },
+            assess: {},
         }
     },
     mounted(){
         this.getUserInfos()
+        this.getAssess()
     },
     methods: {
         getUserInfos(){
@@ -47,7 +62,13 @@ export default {
                 })
         },
         getAssess(){
-            //axios.get('http://localhost:8000/api/assess/')
+            axios.get('http://localhost:8000/api/users/'+this.$route.params.id+ '/assess/')
+                .then(response => {
+                    this.assess = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
     },
 }

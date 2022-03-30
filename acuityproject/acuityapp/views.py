@@ -28,7 +28,7 @@ class AssessViewSet(viewsets.ModelViewSet):
     serializer_class = AssessSerializer
     permission_classes = [permissions.IsAuthenticated]
     
-    def create(self, validated_data):        
+    def create(self, validated_data):     
         user = validated_data.user
         toUser = User.objects.get(pk=validated_data.data['toUser'])        
         score = validated_data.data['score']  
@@ -37,15 +37,52 @@ class AssessViewSet(viewsets.ModelViewSet):
         if user == toUser:
             return Response({'status': status.HTTP_401_UNAUTHORIZED}, status=status.HTTP_401_UNAUTHORIZED)
         
+        # delete every other entries
+        for a in Assess.objects.filter(toUser=validated_data.data['toUser']).filter(fromUser=validated_data.user):
+            a.delete()
+        
         Assess.objects.create(fromUser=user, toUser=toUser, score=score, comment=comment).save()
         
         toUser.update_mean()
         
         return Response({'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
-
+    
+    @action(detail=True, methods=['get'])
+    def myAssessOf(self, request, pk):
+        toUserPk = pk
+        
+        fromUser = request.user
+        existing = Assess.objects.filter(toUser=toUserPk).filter(fromUser=fromUser)
+        
+        try:
+            existing = existing.get()
+        except Assess.MultipleObjectsReturned: 
+            #in case there is already mutliples comments => keep one
+            existing = existing[len(existing)-1]    # keep the last
+            
+            User.objects.get(pk=toUserPk).update_mean()     # update user's mean
+        except Assess.DoesNotExist:
+            return Response({'status': status.HTTP_204_NO_CONTENT}, status=status.HTTP_204_NO_CONTENT)
+            
+            
+        serializer = AssessSerializer(existing, context={'request':request}, many=False)
+        
+        return JsonResponse(serializer.data, safe=False)
+        
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    @action(detail=True, methods=['get'])
+    def assess(self, request, pk):
+        connected = request.user
+        
+        toUser = User.objects.get(pk=pk)
+        assess = Assess.objects.filter(toUser=toUser)
+        
+        serializer = AssessSerializer(assess, context={'request':request}, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
 @csrf_exempt
 def tasks(request):
