@@ -78,6 +78,12 @@ class UsersViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def assess(self, request, pk):
         connected = request.user
+        
+        toUser = User.objects.get(pk=pk)
+        assess = Assess.objects.filter(toUser=toUser)
+        
+        serializer = AssessSerializer(assess, context={'request':request}, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
     @action(detail=False, methods=['get'])
     def get_asc(self, request):
