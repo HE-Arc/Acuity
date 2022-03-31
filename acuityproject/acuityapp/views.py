@@ -1,3 +1,4 @@
+# from crypt import methods
 from django.shortcuts import render
 # from html5lib import serialize
 # parsing data from the client
@@ -42,6 +43,13 @@ class AssessViewSet(viewsets.ModelViewSet):
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    @action(detail=False, methods=['get'])
+    def get_asc(self, request):
+        user = User.objects.all().order_by('score_mean')
+
+        return Response(UserSerializer.data)
+
         
 
 @csrf_exempt
