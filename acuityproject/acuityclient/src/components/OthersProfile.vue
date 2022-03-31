@@ -8,7 +8,7 @@
 
             <div class="column item h60 comments-container">
 
-                <div class="scrollable w80">
+                <q-scrollbar theme="secondary" class="rounded-border w80">
                     <div class="w100 comment-box" v-for="a in assess" :key="a">
                     
                         <p :class="{border: a.comment == ''}" class="title">
@@ -18,7 +18,7 @@
                         <p v-if="a.comment != ''" class="comment">{{a.comment}}</p>
                             
                     </div>
-                </div>
+                </q-scrollbar>
             </div>
         </div>
 
