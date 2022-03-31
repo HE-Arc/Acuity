@@ -10,13 +10,11 @@
 
                 <q-scrollbar theme="secondary" class="rounded-border w80">
                     <div class="w100 comment-box" v-for="a in assess" :key="a">
-                    
                         <p :class="{border: a.comment == ''}" class="title">
                             <q-button theme="link">{{a.fromUser.first_name}} {{a.fromUser.last_name}}</q-button> 
                             <label class="accent-text">{{a.score}}</label>
                         </p>
                         <p v-if="a.comment != ''" class="comment">{{a.comment}}</p>
-                            
                     </div>
                 </q-scrollbar>
             </div>
