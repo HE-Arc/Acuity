@@ -9,6 +9,6 @@ router.register(r'assess', views.AssessViewSet)
 urlpatterns = [
     path('tasks/', views.tasks),
     path('tasks/<int:pk>/', views.task_detail),
-    # path('assess/', views.AssessCreateView.as_view())
+    #path('assess/', views.AssessCreateView.as_view()),
     path('', include(router.urls))
 ]

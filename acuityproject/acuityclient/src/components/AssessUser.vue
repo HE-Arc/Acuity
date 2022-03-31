@@ -4,7 +4,7 @@
 
         <div class="column">
             <div class='item h20'><q-button @click="$router.push('/')" theme="link"><h1>{{user.firstName+" "+user.lastName}}</h1></q-button></div>
-            
+            <div class='item h20'><qrcode-vue :value="user.qrcode" size="200" level="H" background="#edf1f4" foreground="#2c3e50"/></div>
             <template v-if="!isCommenting">
                 <div class="item h20"><q-button @click="updateScore(1)" :disabled="score >= max" class="assess-control" theme="secondary" type="icon" icon="q-icon-triangle-up" circle></q-button></div>
                 <div class="item h20 assess-counter">{{score}}</div>
@@ -31,9 +31,10 @@
 
 <script>
 import CloseHeader from './CloseHeader.vue'
+import QrcodeVue from 'qrcode.vue'
 import axios from 'axios'
 export default {
-  components: { CloseHeader },
+  components: { CloseHeader, QrcodeVue },
     name: 'AssessUser',
     data() {
         return{
@@ -42,17 +43,20 @@ export default {
             min: 1,
             isCommenting: false,
             comment: '',
-
             user:{
                 id: -1,
                 firstName: '',
                 lastName: '',
-                email: ''
+                email: '',
+                qrcode: ""
             }
         }
     },
     mounted(){
         this.getUserInfos()
+    },
+    created(){
+        this.user.qrcode = window.location.href;
     },
     methods: {
         getUserInfos(){
@@ -62,8 +66,7 @@ export default {
                     this.user.firstName = response.data.first_name
                     this.user.lastName = response.data.last_name
                     this.user.email = response.data.email
-
-                    console.log(this.user.email)
+                    console.log(this.user)
                 })
                 .catch(error => {
                     console.log(error)
@@ -93,6 +96,6 @@ export default {
                     console.log(error)
                 })
         },
-    },
+    }
 }
 </script>

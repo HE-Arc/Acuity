@@ -22,6 +22,7 @@ html, body{
     height: 10%;
     display: flex;
     align-items: center;
+    position: fixed;
 }
 
 .log-in{
@@ -30,6 +31,10 @@ html, body{
     transform: translateY(-50%);
     margin: 0;
     padding: 20px;
+}
+
+#main .log-in .error{
+    color: var(--color-secondary-orange);
 }
 
 .assess{
@@ -92,3 +97,5 @@ textarea.focus-visible{
 .h20{height: 20%;}
 
 .h60{height: 60%;}
+
+.h100{height: 100%}
