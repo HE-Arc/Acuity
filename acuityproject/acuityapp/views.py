@@ -1,3 +1,4 @@
+# from crypt import methods
 from django.shortcuts import render
 # from html5lib import serialize
 # parsing data from the client
@@ -77,6 +78,13 @@ class UsersViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def assess(self, request, pk):
         connected = request.user
+
+    @action(detail=False, methods=['get'])
+    def get_asc(self, request):
+        user = User.objects.all().order_by('score_mean')
+
+        return Response(UserSerializer.data)
+
         
         toUser = User.objects.get(pk=pk)
         assess = Assess.objects.filter(toUser=toUser)
