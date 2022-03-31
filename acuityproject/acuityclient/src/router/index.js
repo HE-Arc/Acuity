@@ -5,20 +5,22 @@ import LogIn from '../components/LogIn.vue'
 import SignUp from '../components/SignUp.vue'
 import AssessUser from '../components/AssessUser.vue'
 import MyProfile from '../components/MyProfile.vue'
+import OthersProfile from '../components/OthersProfile.vue'
+import HomePage from '../components/HomePage.vue'
 
 const About = { template: '<div>About</div>' }
-const User = { template : '<div>User {{ $route.params.id }}</div>' }
 const NotFound = { template: '<div>Not Found</div>'}
 
 const routes = [
     { path: '/', component: TasksRead },
     { path: '/about', component: About },
-    { path: '/users/:id', component: User},
+    { path: '/users/:id', component: OthersProfile},
     { path: '/log-in', component: LogIn},
     { path: '/sign-up', component: SignUp},
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
     { path: '/assess/:id', component: AssessUser},
     { path: '/myprofile', component: MyProfile}
+    { path: '/home-page', component: HomePage}
 ]
 
 const router = createRouter({

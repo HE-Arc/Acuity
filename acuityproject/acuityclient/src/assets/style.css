@@ -37,6 +37,11 @@ html, body{
     color: var(--color-secondary-orange);
 }
 
+.accent-text{
+    color: #de4b7a;
+    margin-left: 20px;
+}
+
 .assess{
     height: 90%;
 }
@@ -72,12 +77,11 @@ html, body{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 20%;
     vertical-align:middle;
     margin: 0;
 }
 
-textarea{
+.custom-qui{
     font-size: 18pt !important;
     border-width: 0;
     padding: 20px;
@@ -92,10 +96,57 @@ textarea.focus-visible{
     outline-width: 0;
 }
 
+.title{
+    text-align: left;
+    background-color: white;
+    vertical-align: middle;
+    padding-left: 20px;
+    line-height: 50px;
+    margin: 0;
+
+    font-size: 18pt !important;
+    border-width: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.border{
+    border-radius: 10px;
+}
+
+.comment{
+    background-color: white;
+    border-top-style: outset;
+    border-width: 1px;
+    margin: 0;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    text-align: left;
+    font-size: 10pt !important;
+
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.comment-box{
+    padding-bottom: 5px;
+}
+
+.comments-container{
+    justify-content: normal!important;
+    margin: 40px;
+    
+}
+
+.rounded-border{
+    border-radius: 10px;
+}
+
 .w80{width: 80%;}
-
+.w100{width: 100%;}
 .h20{height: 20%;}
-
 .h60{height: 60%;}
-
 .h100{height: 100%}

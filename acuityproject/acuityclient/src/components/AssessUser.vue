@@ -3,12 +3,13 @@
         <close-header></close-header>
 
         <div class="column">
-            <div class='item h20'><q-button @click="$router.push('/')" theme="link"><h1>{{user.firstName+" "+user.lastName}}</h1></q-button></div>
-            <div class='item h20'><qrcode-vue :value="user.qrcode" size="200" level="H" background="#edf1f4" foreground="#2c3e50"/></div>
+
+            <div class='item h20'><q-button @click="$router.push('/users/'+user.id)" theme="link"><h1>{{user.firstName+" "+user.lastName}}</h1></q-button></div>
+            
             <template v-if="!isCommenting">
-                <div class="item h20"><q-button @click="updateScore(1)" :disabled="score >= max" class="assess-control" theme="secondary" type="icon" icon="q-icon-triangle-up" circle></q-button></div>
-                <div class="item h20 assess-counter">{{score}}</div>
-                <div class="item h20"><q-button @click="updateScore(-1)" :disabled="score <= min" class="assess-control" theme="secondary" type="icon" icon="q-icon-triangle-down" circle></q-button></div>
+                <div class="item h20"><q-button @click="updateScore(1)" :disabled="assess.score >= max" class="assess-control" theme="secondary" type="icon" icon="q-icon-triangle-up" circle></q-button></div>
+                <div class="item h20 assess-counter">{{assess.score}}</div>
+                <div class="item h20"><q-button @click="updateScore(-1)" :disabled="assess.score <= min" class="assess-control" theme="secondary" type="icon" icon="q-icon-triangle-down" circle></q-button></div>
             
                 <div class="item h20"><q-button class='assess-send' @click="isCommenting=true">Continue</q-button></div>
             </template>
@@ -19,7 +20,7 @@
                         <div class="q-form-item__header">
                             <label for="email" class="q-form-item__label">Email</label>
                         </div>
-                        <textarea v-model="comment" placeholder="Comment you judgement..."></textarea>
+                        <textarea class="custom-qui" v-model="assess.comment" placeholder="Comment you judgement..."></textarea>
                     </div>                    
                 </div>
                 <div class="item h20"><q-button class='assess-send' @click="send">Send</q-button></div>
@@ -38,59 +39,80 @@ export default {
     name: 'AssessUser',
     data() {
         return{
-            score: 4,
             max: 5,
             min: 1,
             isCommenting: false,
-            comment: '',
+            
             user:{
                 id: -1,
                 firstName: '',
                 lastName: '',
-                email: '',
-                qrcode: ""
+                email: ''
+            },
+            assess:{
+                score: 4,
+                comment: ''
             }
         }
     },
     mounted(){
-        this.getUserInfos()
+        this.getExistentAssess()
     },
     created(){
         this.user.qrcode = window.location.href;
     },
     methods: {
+        getExistentAssess(){
+            axios.get('http://localhost:8000/api/assess/4/myAssessOf/')
+                .then(response=>{
+                    if(response.status == 204)
+                        this.getUserInfos()
+                    else{
+                        this.fillUser(response.data.toUser)
+                        this.fillAssess(response.data)
+                    }   
+                })
+                .catch(error=>{
+                    console.log(error)
+                })
+        },
         getUserInfos(){
             axios.get('http://localhost:8000/api/users/' + this.$route.params.id + '/')
                 .then(response => {
-                    this.user.id = response.data.id
-                    this.user.firstName = response.data.first_name
-                    this.user.lastName = response.data.last_name
-                    this.user.email = response.data.email
-                    console.log(this.user)
+                    this.fillUser(response.data)
                 })
                 .catch(error => {
                     console.log(error)
                 })
         },
+        fillUser(data){
+            this.user.id = data.id
+            this.user.firstName = data.first_name
+            this.user.lastName = data.last_name
+            this.user.email = data.email
+        },
+        fillAssess(data){
+            this.assess.comment = data.comment
+            this.assess.score = data.score
+        }
+        ,
         updateScore(n){
-            this.score += n;
-            if(this.score > this.max)
-                this.score = this.max
-            else if(this.score < this.min)
-                this.score = this.min
+            this.assess.score += n;
+            if(this.assess.score > this.max)
+                this.assess.score = this.max
+            else if(this.assess.score < this.min)
+                this.assess.score = this.min
         },
         send(){
             const data = {
-                score: this.score,
+                score: this.assess.score,
                 toUser: this.$route.params.id,
-                comment: this.comment,
+                comment: this.assess.comment,
             }
 
-            console.log(axios.defaults.headers)
-
             axios.post('http://localhost:8000/api/assess/', data)
-                .then(response => {
-                    console.log(response)
+                .then(()=>{
+                    this.$router.push('/users/'+this.user.id)
                 })
                 .catch(error => {
                     console.log(error)

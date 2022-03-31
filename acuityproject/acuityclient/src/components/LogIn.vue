@@ -2,20 +2,19 @@
     <div class="h100">
         <main-header></main-header>
         <div class="log-in">
-
-            <!-- <h1>Acuity</h1> -->
-            <h3>Log in</h3>
-            <q-form ref="form" :rules="rules" showErrorMessage>
-                <q-form-item label="Email" prop="email">
-                    <q-input v-model="email" type="text"/>
-                </q-form-item>
-                <q-form-item label="Password" prop="password">
-                    <q-input v-model="password" type="password"/>
-                </q-form-item>
-                <q-form-item :label="error"></q-form-item>
-                <q-button @click="submitForm">Log in</q-button>
-            </q-form>
-        </div>
+        <h1>Acuity</h1>
+        <h3>Log in</h3>
+        <q-form ref="form" :model="model" :rules="rules">
+            <q-form-item label="Email" prop="email">
+                <q-input v-model="model.email" type="text"/>
+            </q-form-item>
+            <q-form-item label="Password" prop="password">
+                <q-input v-model="model.password" type="password"/>
+            </q-form-item>
+            
+            <p v-if="isLoading"><q-button loading>Log in</q-button></p>
+            <p v-else><q-button @click="submitForm">Log in</q-button></p>
+        </q-form>
     </div>
 </template>
 
@@ -29,9 +28,11 @@ export default {
 
     data() {
         return{
-            email: '',
-            password: '',
             error: '',
+            model:{
+                email: '',
+                password: '',
+            },
             isLoading: false,
 
             rules: {
@@ -49,10 +50,10 @@ export default {
             this.isLoading = true;
 
             const formData = {
-                password: this.password,
-                email: this.email
+                password: this.model.password,
+                email: this.model.email
             }
-
+            console.log(formData)
             axios.post('http://localhost:8000/api/token/login', formData)
                 .then(response => {
                     console.log(response)
@@ -63,7 +64,7 @@ export default {
 
                     localStorage.setItem("token", token)
 
-                    this.$router.push("/")
+                    this.$router.push('/')
                 })
                 .catch(error => {
                     if (error.response.status == 400){

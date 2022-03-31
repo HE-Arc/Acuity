@@ -6,10 +6,15 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Task
         fields = ['id', 'title', 'description', 'completed', 'created_at']
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'score_mean', 'first_name', 'last_name', 'password']
         
 class AssessSerializer(serializers.HyperlinkedModelSerializer):
-    fromUser = serializers.PrimaryKeyRelatedField(many=False, queryset=User.objects.all())
-    toUser = serializers.PrimaryKeyRelatedField(many=False, queryset=User.objects.all())
+    fromUser = UserSerializer(read_only=True)
+    toUser = UserSerializer(read_only=True)
     class Meta:
         model = Assess
-        fields = ['url', 'score', 'fromUser', 'toUser']
+        fields = ['url', 'score', 'fromUser', 'toUser', 'comment']
