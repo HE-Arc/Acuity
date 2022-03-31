@@ -26,16 +26,15 @@
                 <div class="item h20"><q-button class='assess-send' @click="send">Send</q-button></div>
             </template>
         </div>
-
     </div>
 </template>
 
 <script>
 import CloseHeader from './CloseHeader.vue'
-import QrcodeVue from 'qrcode.vue'
+//import QrcodeVue from 'qrcode.vue'
 import axios from 'axios'
 export default {
-  components: { CloseHeader, QrcodeVue },
+  components: { CloseHeader },
     name: 'AssessUser',
     data() {
         return{

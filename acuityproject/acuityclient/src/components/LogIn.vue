@@ -2,19 +2,20 @@
     <div class="h100">
         <main-header></main-header>
         <div class="log-in">
-        <h1>Acuity</h1>
-        <h3>Log in</h3>
-        <q-form ref="form" :model="model" :rules="rules">
-            <q-form-item label="Email" prop="email">
-                <q-input v-model="model.email" type="text"/>
-            </q-form-item>
-            <q-form-item label="Password" prop="password">
-                <q-input v-model="model.password" type="password"/>
-            </q-form-item>
-            
-            <p v-if="isLoading"><q-button loading>Log in</q-button></p>
-            <p v-else><q-button @click="submitForm">Log in</q-button></p>
-        </q-form>
+            <h1>Acuity</h1>
+            <h3>Log in</h3>
+                <q-form ref="form" :model="model" :rules="rules">
+                    <q-form-item label="Email" prop="email">
+                        <q-input v-model="model.email" type="text"/>
+                    </q-form-item>
+                    <q-form-item label="Password" prop="password">
+                        <q-input v-model="model.password" type="password"/>
+                    </q-form-item>
+                    
+                    <p v-if="isLoading"><q-button loading>Log in</q-button></p>
+                    <p v-else><q-button @click="submitForm">Log in</q-button></p>
+                </q-form>
+        </div>
     </div>
 </template>
 

@@ -19,7 +19,7 @@ const routes = [
     { path: '/sign-up', component: SignUp},
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
     { path: '/assess/:id', component: AssessUser},
-    { path: '/myprofile', component: MyProfile}
+    { path: '/myprofile', component: MyProfile},
     { path: '/home-page', component: HomePage}
 ]
 
