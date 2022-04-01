@@ -1,5 +1,6 @@
 # from crypt import methods
 from django.shortcuts import render
+from html5lib import serialize
 # from html5lib import serialize
 # parsing data from the client
 from rest_framework.parsers import JSONParser
@@ -86,17 +87,18 @@ class UsersViewSet(viewsets.ModelViewSet):
         return JsonResponse(serializer.data, safe=False)
 
     @action(detail=False, methods=['get'])
-    def get_asc(self, request):
-        user = User.objects.all().order_by('score_mean')
+    def best_users(self, request):
 
-        return Response(UserSerializer.data)
+        users = User.objects.all().order_by('-score_mean')[:10]
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
+    @action(detail=False, methods=['get'])
+    def worst_users(self, request):
         
-        toUser = User.objects.get(pk=pk)
-        assess = Assess.objects.filter(toUser=toUser)
-        
-        serializer = AssessSerializer(assess, context={'request':request}, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        users = User.objects.all().order_by('score_mean')[:10]
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
     
     def create(self, validated_data):   
         validated_data = validated_data.data
