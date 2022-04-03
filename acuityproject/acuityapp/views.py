@@ -1,6 +1,6 @@
 # from crypt import methods
 from django.shortcuts import render
-from html5lib import serialize
+# from html5lib import serialize
 # from html5lib import serialize
 # parsing data from the client
 from rest_framework.parsers import JSONParser
