@@ -49,7 +49,7 @@ import MainHeader from './MainHeader.vue';
         methods: {
             async getData() {
                 try {
-                    axios.get('http://localhost:8000/api/tasks/')
+                    axios.get(this.$router.routeApi('/tasks/'))
                         .then(response => {
                             this.tasks = response.data
                         });
@@ -61,7 +61,7 @@ import MainHeader from './MainHeader.vue';
             async submitForm(){
                 try {
                     // Send a POST request to the API
-                    axios.post('http://localhost:8000/api/tasks/', {
+                    axios.post(this.$router.routeApi('/tasks/'), {
                         title: this.title,
                         description: this.description,
                         completed: false

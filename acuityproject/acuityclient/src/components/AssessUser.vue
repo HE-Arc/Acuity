@@ -1,5 +1,5 @@
 <template>
-    <div class="assess">
+    <div class="assess h100">
         <close-header></close-header>
 
         <div class="column">
@@ -62,7 +62,7 @@ export default {
     },
     methods: {
         getExistentAssess(){
-            axios.get('http://localhost:8000/api/assess/4/myAssessOf/')
+            axios.get(this.$router.routeApi('/assess/4/myAssessOf/'))
                 .then(response=>{
                     if(response.status == 204)
                         this.getUserInfos()
@@ -76,7 +76,7 @@ export default {
                 })
         },
         getUserInfos(){
-            axios.get('http://localhost:8000/api/users/' + this.$route.params.id + '/')
+            axios.get(this.$router.routeApi('/users/'+this.$route.params.id + '/'))
                 .then(response => {
                     this.fillUser(response.data)
                 })
@@ -109,7 +109,7 @@ export default {
                 comment: this.assess.comment,
             }
 
-            axios.post('http://localhost:8000/api/assess/', data)
+            axios.post(this.$router.routeApi('/assess/'), data)
                 .then(()=>{
                     this.$router.push('/users/'+this.user.id)
                 })

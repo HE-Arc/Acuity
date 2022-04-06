@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     getInitialUsers() {
-      axios.get('http://localhost:8000/api/users/?results=2').then((response) => {
+      axios.get(this.$router.routeApi('/users/?results=2')).then((response) => {
         this.users = response.data;
       });
     },
