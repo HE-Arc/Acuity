@@ -1,5 +1,5 @@
 <template>
-    <div class="header">
+    <div class="header" :class="{fixed : isFixed}">
         <q-row class="block__row" align-v="center">
             <q-col class="block__content"><h1>Acuity</h1></q-col>
             <q-col class="block__content">
@@ -12,6 +12,7 @@
 <script>
 export default {
     name: 'MainHeader',
+    props:['isFixed'],
     data() {
         return{
         }

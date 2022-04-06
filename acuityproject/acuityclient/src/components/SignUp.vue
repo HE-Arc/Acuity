@@ -1,7 +1,7 @@
 <template>
 
     <div class="h100">
-        <main-header></main-header>
+        <main-header :isFixed="true"></main-header>
         <div class="log-in">
         <h1>Acuity</h1>
         <h3>Sign up</h3>

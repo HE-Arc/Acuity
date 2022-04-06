@@ -1,9 +1,18 @@
 <template>
-  <div class="home-page">
-    <h1>Acuity</h1>
-    <h3>Homepage</h3>
-        
-      <div class="users-list row">
+  <div class="home-page">   
+
+    <main-header fixed="True"></main-header>
+    <div class="column">
+      <div v-if="is_dsc" class="item h20 direction-column">
+        <h3>Here are the <label class="accent-text">worst</label> citizens</h3>
+        <p>Check the <a @click="is_dsc=false; this.getBestUsers()">bests</a></p>
+      </div>
+      <div v-if="!is_dsc" class="item h20 direction-column">
+        <h3>Here are the <label class="accent-text">bests</label> citizens</h3>
+        <p>Check the <a @click="is_dsc=true; this.getWorstUsers()">worsts</a></p>
+      </div>
+      <div class="item h60">
+        <div class="users-list">
           <button v-for="user in users" :key="user" class="user-button w100">
             <div class="column-list user-name">
                 {{ user.first_name }}
@@ -12,45 +21,34 @@
                 {{ user.score_mean.toFixed(1) }}
             </div>
           </button>
+        </div>
       </div>
-    <div class="row">
-      <q-button class="colmun" :theme="[is_dsc ? '' : 'secondary']" @click="is_dsc=true; this.getBestUsers()">
-        Bests
-      </q-button>
-      <q-button class="column" :theme="[is_dsc ? 'secondary' : '']" @click="is_dsc=false; this.getWorstUsers()">
-        Worsts
-      </q-button>
     </div>
-    <div>
-      <q-button>
-        Scan
-      </q-button>
-
-    </div>
-
   </div>
 </template>
 
 
 <script>
 import axios from "axios";
+import MainHeader from './MainHeader.vue';
 
 export default {
+  components: { MainHeader },
   data() {
     return {
       users: [],
-      is_dsc: true,
+      is_dsc: false,
     };
   },
   methods: {
 
     getBestUsers() {
-      axios.get('http://localhost:8000/api/users/best_users/').then((response) => {
+      axios.get(this.$router.routeApi('/users/best_users/')).then((response) => {
         this.users = response.data;
       });
     },
     getWorstUsers() {
-      axios.get('http://localhost:8000/api/users/worst_users/').then((response) => {
+      axios.get(this.$router.routeApi('/users/worst_users/')).then((response) => {
         this.users = response.data;
       });
     },
