@@ -10,7 +10,7 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'score_mean', 'first_name', 'last_name', 'password']
+        fields = ['id', 'email', 'score_mean', 'first_name', 'last_name']
         
 class AssessSerializer(serializers.HyperlinkedModelSerializer):
     fromUser = UserSerializer(read_only=True)

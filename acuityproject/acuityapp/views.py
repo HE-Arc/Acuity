@@ -78,8 +78,6 @@ class UsersViewSet(viewsets.ModelViewSet):
     
     @action(detail=True, methods=['get'])
     def assess(self, request, pk):
-        connected = request.user
-        
         toUser = User.objects.get(pk=pk)
         assess = Assess.objects.filter(toUser=toUser)
         

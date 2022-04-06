@@ -55,7 +55,7 @@ export default {
                 email: this.model.email
             }
             console.log(formData)
-            axios.post('http://localhost:8000/api/token/login', formData)
+            axios.post(this.$router.routeApi('/token/login'), formData)
                 .then(response => {
                     console.log(response)
                     const token = response.data.auth_token

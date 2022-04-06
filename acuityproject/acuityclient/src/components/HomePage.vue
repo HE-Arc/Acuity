@@ -43,6 +43,7 @@ export default {
     };
   },
   methods: {
+
     getBestUsers() {
       axios.get('http://localhost:8000/api/users/best_users/').then((response) => {
         this.users = response.data;

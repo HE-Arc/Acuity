@@ -29,4 +29,8 @@ const router = createRouter({
     routes, // short for `routes: routes`
 })
 
+router.routeApi = function(l){
+    return 'http://localhost:8000/api' + l
+}
+
 export default router

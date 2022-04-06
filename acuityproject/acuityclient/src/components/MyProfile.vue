@@ -5,6 +5,7 @@
         <div class="column">
             <div class='item h20'><q-button @click="$router.push('/')" theme="link"><h1>{{user.firstName+" "+user.lastName}}</h1></q-button></div>
             <div class='item h20'><qrcode-vue :value="user.qrcode" size="200" level="H" background="#edf1f4" foreground="#2c3e50"/></div>
+            <span class="material-icons-outlined">qr_code</span>
         </div>
 
     </div>
@@ -38,7 +39,7 @@ export default {
     },
     methods: {
         getUserInfos(){
-            axios.get('http://localhost:8000/api/users/' + this.$route.params.id + '/')
+            axios.get(this.$router.routeApi('/users/' + this.$route.params.id + '/'))
                 .then(response => {
                     this.user.id = response.data.id
                     this.user.firstName = response.data.first_name

@@ -1,5 +1,5 @@
 <template>
-    <div class="assess">
+    <div class="assess h100">
         <close-header></close-header>
 
         <div class="column">
@@ -43,11 +43,10 @@ export default {
     },
     mounted(){
         this.getUserInfos()
-        this.getAssess()
     },
     methods: {
         getUserInfos(){
-            axios.get('http://localhost:8000/api/users/' + this.$route.params.id + '/')
+            axios.get(this.$router.routeApi('/users/' + this.$route.params.id + '/'))
                 .then(response => {
                     this.user.id = response.data.id
                     this.user.firstName = response.data.first_name
@@ -55,12 +54,15 @@ export default {
                     this.user.email = response.data.email
                     this.user.scoreMean = response.data.score_mean
                 })
+                .then(()=>{
+                    this.getAssess()
+                })
                 .catch(error => {
                     console.log(error)
                 })
         },
         getAssess(){
-            axios.get('http://localhost:8000/api/users/'+this.$route.params.id+ '/assess/')
+            axios.get(this.$router.routeApi('/users/'+this.$route.params.id+ '/assess/'))
                 .then(response => {
                     this.assess = response.data
                 })
