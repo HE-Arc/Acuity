@@ -1,6 +1,7 @@
 # from crypt import methods
 from django.shortcuts import render
 # from html5lib import serialize
+# from html5lib import serialize
 # parsing data from the client
 from rest_framework.parsers import JSONParser
 # To bypass having a CSRF token
@@ -84,10 +85,17 @@ class UsersViewSet(viewsets.ModelViewSet):
         return JsonResponse(serializer.data, safe=False)
 
     @action(detail=False, methods=['get'])
-    def get_asc(self, request):
-        users = User.objects.all().order_by('score_mean')
-        serializer = UserSerializer(users, many=True)
+    def best_users(self, request):
 
+        users = User.objects.all().order_by('-score_mean')[:10]
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def worst_users(self, request):
+        
+        users = User.objects.all().order_by('score_mean')[:10]
+        serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     
     def create(self, validated_data):   

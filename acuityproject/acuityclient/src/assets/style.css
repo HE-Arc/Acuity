@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 
 html, body{
     background-color: #edf1f4;
@@ -69,6 +70,12 @@ html, body{
     height: 100%;
 }
 
+.column-list{
+    display: flex;
+    flex-direction: column;
+    height: 0%;
+}
+
 .item{
     display: flex;
     align-items: center;
@@ -106,6 +113,72 @@ textarea.focus-visible{
     border-top-right-radius: 10px;
     width: 100%;
     max-width: 100%;
+}
+
+.home-page{
+    background-color: #e0e0e0;
+    height: 100%;
+}
+
+.users-list{
+    margin: 100px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    box-shadow:  9px 9px 27px #cccccc,
+             -9px -9px 27px #f4f4f4;
+}
+
+.user-button{
+    height: 50px;
+    margin: 0px;
+    outline:invert;
+    border-radius: 0px;
+    border: none;
+    border-top: solid;
+    border-top-width: 1px;
+    border-top-color: lightgray;
+    background-color: #e0e0e0;
+}
+
+.user-button:hover{
+    background-color: #de4b7a;
+    color: white;
+    font-size: 130%;
+}
+
+.user-button:active{
+    background-color: #e0e0e0;
+}
+
+.user-button:first-of-type{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: none;
+}
+
+.user-button:last-of-type{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.score-mean{
+    text-align: right;
+    justify-content: center;
+    padding-right: 20px;
+}
+
+.user-name{
+    text-align: left;
+    justify-content: center;
+    padding-left: 20px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 .border{

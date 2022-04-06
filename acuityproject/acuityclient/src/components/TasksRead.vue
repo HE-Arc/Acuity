@@ -35,7 +35,7 @@
 </template>
 <script>
     import axios from 'axios'
-import MainHeader from './MainHeader.vue';
+    import MainHeader from './MainHeader.vue';
     export default {
   components: { MainHeader },
         data() {
