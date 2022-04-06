@@ -23,7 +23,7 @@ html, body{
     height: 10%;
     display: flex;
     align-items: center;
-    position: fixed;
+    width: 100%;
 }
 
 .log-in{
@@ -34,13 +34,16 @@ html, body{
     padding: 20px;
 }
 
+.home-page{
+    height: 100%;
+}
+
 #main .log-in .error{
     color: var(--color-secondary-orange);
 }
 
 .accent-text{
     color: #de4b7a;
-    margin-left: 20px;
 }
 
 .assess-counter{
@@ -115,19 +118,16 @@ textarea.focus-visible{
     max-width: 100%;
 }
 
-.home-page{
-    background-color: #e0e0e0;
-    height: 100%;
-}
-
 .users-list{
-    margin: 100px;
     max-width: 400px;
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
-    box-shadow:  9px 9px 27px #cccccc,
-             -9px -9px 27px #f4f4f4;
+    box-shadow: -10px -10px 30px rgb(var(--color-rgb-white) / 25%), 
+        5px 5px 15px rgb(var(--color-rgb-blue) / 40%), 
+        5px 5px 10px rgb(var(--color-rgb-blue) / 10%), 
+        -8px -8px 10px var(--color-tertiary-white);;
+    width: 80%;
 }
 
 .user-button{
@@ -138,18 +138,14 @@ textarea.focus-visible{
     border: none;
     border-top: solid;
     border-top-width: 1px;
-    border-top-color: lightgray;
-    background-color: #e0e0e0;
+    background-color: white;
+    border-color: #edf1f4;
 }
 
 .user-button:hover{
     background-color: #de4b7a;
     color: white;
     font-size: 130%;
-}
-
-.user-button:active{
-    background-color: #e0e0e0;
 }
 
 .user-button:first-of-type{
@@ -179,6 +175,10 @@ textarea.focus-visible{
     content: "";
     display: table;
     clear: both;
+}
+
+p .q-button{
+    height: 100%;
 }
 
 .border{
@@ -214,8 +214,17 @@ textarea.focus-visible{
     border-radius: 10px;
 }
 
+a{
+    cursor: pointer;
+}
+
+.fixed{position: fixed;}
 .w80{width: 80%;}
 .w100{width: 100%;}
 .h20{height: 20%;}
+.h40{height: 40%;}
 .h60{height: 60%;}
+.h80{height: 80%;}
 .h100{height: 100%}
+.space-left{margin-left: 20px;}
+.direction-column{flex-direction: column;}
