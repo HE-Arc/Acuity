@@ -1,6 +1,6 @@
 <template>
     <div class="h100">
-        <main-header></main-header>
+        <main-header :isFixed="true"></main-header>
         <div class="log-in">
             <h1>Acuity</h1>
             <h3>Log in</h3>
@@ -55,7 +55,7 @@ export default {
                 email: this.model.email
             }
             console.log(formData)
-            axios.post('http://localhost:8000/api/token/login', formData)
+            axios.post(this.$router.routeApi('/token/login'), formData)
                 .then(response => {
                     console.log(response)
                     const token = response.data.auth_token

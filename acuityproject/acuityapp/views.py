@@ -1,6 +1,7 @@
 # from crypt import methods
 from django.shortcuts import render
 # from html5lib import serialize
+# from html5lib import serialize
 # parsing data from the client
 from rest_framework.parsers import JSONParser
 # To bypass having a CSRF token
@@ -31,29 +32,35 @@ class AssessViewSet(viewsets.ModelViewSet):
     
     def create(self, validated_data):     
         user = validated_data.user
-        toUser = User.objects.get(pk=validated_data.data['toUser'])        
-        score = validated_data.data['score']  
-        comment = validated_data.data['comment']
+        
+        try:
+            to_user = User.objects.get(pk=validated_data.data['to_user'])        
+            score = validated_data.data['score']  
+            comment = validated_data.data['comment']
+        except KeyError:
+            return Response({'status': status.HTTP_404_NOT_FOUND}, status=status.HTTP_404_NOT_FOUND)
+        
+        
          
-        if user == toUser:
+        if user == to_user:
             return Response({'status': status.HTTP_401_UNAUTHORIZED}, status=status.HTTP_401_UNAUTHORIZED)
         
         # delete every other entries
-        for a in Assess.objects.filter(toUser=validated_data.data['toUser']).filter(fromUser=validated_data.user):
+        for a in Assess.objects.filter(to_user=validated_data.data['to_user']).filter(from_user=validated_data.user):
             a.delete()
         
-        Assess.objects.create(fromUser=user, toUser=toUser, score=score, comment=comment).save()
+        Assess.objects.create(from_user=user, to_user=to_user, score=score, comment=comment).save()
         
-        toUser.update_mean()
+        to_user.update_mean()
         
         return Response({'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
     
     @action(detail=True, methods=['get'])
     def myAssessOf(self, request, pk):
-        toUserPk = pk
+        to_user_pk = pk
         
-        fromUser = request.user
-        existing = Assess.objects.filter(toUser=toUserPk).filter(fromUser=fromUser)
+        from_user = request.user
+        existing = Assess.objects.filter(to_user=to_user_pk).filter(from_user=from_user)
         
         try:
             existing = existing.get()
@@ -61,7 +68,7 @@ class AssessViewSet(viewsets.ModelViewSet):
             #in case there is already mutliples comments => keep one
             existing = existing[len(existing)-1]    # keep the last
             
-            User.objects.get(pk=toUserPk).update_mean()     # update user's mean
+            User.objects.get(pk=to_user_pk).update_mean()     # update user's mean
         except Assess.DoesNotExist:
             return Response({'status': status.HTTP_204_NO_CONTENT}, status=status.HTTP_204_NO_CONTENT)
             
@@ -77,8 +84,8 @@ class UsersViewSet(viewsets.ModelViewSet):
     
     @action(detail=True, methods=['get'])
     def assess(self, request, pk):
-        toUser = User.objects.get(pk=pk)
-        assess = Assess.objects.filter(toUser=toUser)
+        to_user = User.objects.get(pk=pk)
+        assess = Assess.objects.filter(to_user=to_user)
         
         serializer = AssessSerializer(assess, context={'request':request}, many=True)
         return JsonResponse(serializer.data, safe=False)
@@ -90,12 +97,18 @@ class UsersViewSet(viewsets.ModelViewSet):
         
         return JsonResponse(serializer.data, safe=False)
         
+    def best_users(self, request):
+
+        users = User.objects.all().order_by('-score_mean')[:10]
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
     @action(detail=False, methods=['get'])
-    def get_asc(self, request):
-        user = User.objects.all().order_by('score_mean')
-
-        return Response(UserSerializer.data)
+    def worst_users(self, request):
+        
+        users = User.objects.all().order_by('score_mean')[:10]
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
     
     def create(self, validated_data):   
         validated_data = validated_data.data
@@ -132,35 +145,5 @@ def tasks(request):
             return JsonResponse(serializer.data, status=201)
             # provide a Json Response with the necessary error information
         return JsonResponse(serializer.errors, status=400)
-    
-@csrf_exempt
-def task_detail(request, pk):
-    print(pk)
-    try:
-        # obtain the task with the passed id.
-        task = Task.objects.get(pk=pk)
-    except:
-        # respond with a 404 error message
-        return HttpResponse(status=404)  
-    if(request.method == 'PUT'):
-        # parse the incoming information
-        data = JSONParser().parse(request)  
-        # instanciate with the serializer
-        serializer = TaskSerializer(task, data=data)
-        # check whether the sent information is okay
-        if(serializer.is_valid()):  
-            # if okay, save it on the database
-            serializer.save() 
-            # provide a JSON response with the data that was submitted
-            return JsonResponse(serializer.data, status=201)
-        # provide a JSON response with the necessary error information
-        return JsonResponse(serializer.errors, status=400)
-    elif(request.method == 'DELETE'):
-        # delete the task
-        task.delete() 
-        # return a no content response.
-        return HttpResponse(status=204) 
-    elif(request.method == 'GET'):
-        serializer = TaskSerializer(task)
-        return JsonResponse(serializer.data)
+
         

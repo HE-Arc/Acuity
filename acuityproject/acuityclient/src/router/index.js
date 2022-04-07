@@ -1,6 +1,5 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
 
-import TasksRead from '../components/TasksRead.vue'
 import LogIn from '../components/LogIn.vue'
 import SignUp from '../components/SignUp.vue'
 import AssessUser from '../components/AssessUser.vue'
@@ -12,7 +11,6 @@ const About = { template: '<div>About</div>' }
 const NotFound = { template: '<div>Not Found</div>'}
 
 const routes = [
-    { path: '/', component: TasksRead },
     { path: '/about', component: About },
     { path: '/users/:id', component: OthersProfile},
     { path: '/log-in', component: LogIn},
@@ -20,7 +18,7 @@ const routes = [
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
     { path: '/assess/:id', component: AssessUser},
     { path: '/myprofile', component: MyProfile},
-    { path: '/home-page', component: HomePage}
+    { path: '/', component: HomePage}
 ]
 
 const router = createRouter({
@@ -28,5 +26,9 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes, // short for `routes: routes`
 })
+
+router.routeApi = function(l){
+    return 'https://acuity.srvz-webapp.he-arc.ch/api/' + l
+}
 
 export default router

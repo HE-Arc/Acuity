@@ -1,6 +1,6 @@
 <template>
-    <div class="assess">
-        <close-header></close-header>
+    <div class="assess h100">
+        <main-header :isFixed="true" :isClose="true"></main-header>
 
         <div class="column">
 
@@ -30,11 +30,11 @@
 </template>
 
 <script>
-import CloseHeader from './CloseHeader.vue'
 //import QrcodeVue from 'qrcode.vue'
 import axios from 'axios'
+import MainHeader from './MainHeader.vue';
 export default {
-  components: { CloseHeader },
+  components: { MainHeader},
     name: 'AssessUser',
     data() {
         return{
@@ -62,12 +62,12 @@ export default {
     },
     methods: {
         getExistentAssess(){
-            axios.get('http://localhost:8000/api/assess/4/myAssessOf/')
+            axios.get(this.$router.routeApi('/assess/'+this.user.id+'/myAssessOf/'))
                 .then(response=>{
                     if(response.status == 204)
                         this.getUserInfos()
                     else{
-                        this.fillUser(response.data.toUser)
+                        this.fillUser(response.data.to_user)
                         this.fillAssess(response.data)
                     }   
                 })
@@ -76,7 +76,7 @@ export default {
                 })
         },
         getUserInfos(){
-            axios.get('http://localhost:8000/api/users/' + this.$route.params.id + '/')
+            axios.get(this.$router.routeApi('/users/'+this.$route.params.id + '/'))
                 .then(response => {
                     this.fillUser(response.data)
                 })
@@ -105,11 +105,11 @@ export default {
         send(){
             const data = {
                 score: this.assess.score,
-                toUser: this.$route.params.id,
+                to_user: this.$route.params.id,
                 comment: this.assess.comment,
             }
 
-            axios.post('http://localhost:8000/api/assess/', data)
+            axios.post(this.$router.routeApi('/assess/'), data)
                 .then(()=>{
                     this.$router.push('/users/'+this.user.id)
                 })

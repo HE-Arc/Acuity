@@ -53,7 +53,7 @@ export default {
     },
     methods: {
         getUserInfos(){
-            axios.get('http://localhost:8000/api/users/myuser/')
+            axios.get(this.$router.routeApi('/myuser/'))
                 .then(response => {
                     this.user.id = response.data.id
                     this.user.firstName = response.data.first_name

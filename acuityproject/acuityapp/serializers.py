@@ -10,11 +10,11 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'score_mean', 'first_name', 'last_name', 'password']
+        fields = ['id', 'email', 'score_mean', 'first_name', 'last_name']
         
 class AssessSerializer(serializers.HyperlinkedModelSerializer):
-    fromUser = UserSerializer(read_only=True)
-    toUser = UserSerializer(read_only=True)
+    from_user = UserSerializer(read_only=True)
+    to_user = UserSerializer(read_only=True)
     class Meta:
         model = Assess
-        fields = ['url', 'score', 'fromUser', 'toUser', 'comment']
+        fields = ['url', 'score', 'from_user', 'to_user', 'comment']

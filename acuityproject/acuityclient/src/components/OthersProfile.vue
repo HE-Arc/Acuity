@@ -1,6 +1,6 @@
 <template>
-    <div class="assess">
-        <close-header></close-header>
+    <div class="assess h100">
+        <main-header :isClose="true" :isFixed="true"></main-header>
 
         <div class="column">
             <div class='item h20'><h1 theme="link">{{user.firstName+" "+user.lastName}}</h1></div>
@@ -11,8 +11,9 @@
                 <q-scrollbar theme="secondary" class="rounded-border w80">
                     <div class="w100 comment-box" v-for="a in assess" :key="a">
                         <p :class="{border: a.comment == ''}" class="title">
-                            <q-button theme="link">{{a.fromUser.first_name}} {{a.fromUser.last_name}}</q-button> 
-                            <label class="accent-text">{{a.score}}</label>
+                            <q-button theme="link">{{a.from_user.first_name}} {{a.from_user.last_name}}</q-button> 
+
+                            <label class="space-left accent-text">{{a.score}}</label>
                         </p>
                         <p v-if="a.comment != ''" class="comment">{{a.comment}}</p>
                     </div>
@@ -24,10 +25,10 @@
 </template>
 
 <script>
-import CloseHeader from './CloseHeader.vue'
 import axios from 'axios'
+import MainHeader from './MainHeader.vue';
 export default {
-  components: { CloseHeader },
+  components: { MainHeader},
     name: 'AssessUser',
     data() {
         return{
@@ -43,24 +44,27 @@ export default {
     },
     mounted(){
         this.getUserInfos()
-        this.getAssess()
     },
     methods: {
         getUserInfos(){
-            axios.get('http://localhost:8000/api/users/' + this.$route.params.id + '/')
+            axios.get(this.$router.routeApi('/users/' + this.$route.params.id + '/'))
                 .then(response => {
+                    console.log(response)
                     this.user.id = response.data.id
                     this.user.firstName = response.data.first_name
                     this.user.lastName = response.data.last_name
                     this.user.email = response.data.email
                     this.user.scoreMean = response.data.score_mean
                 })
+                .then(()=>{
+                    this.getAssess()
+                })
                 .catch(error => {
                     console.log(error)
                 })
         },
         getAssess(){
-            axios.get('http://localhost:8000/api/users/'+this.$route.params.id+ '/assess/')
+            axios.get(this.$router.routeApi('/users/'+this.$route.params.id+ '/assess/'))
                 .then(response => {
                     this.assess = response.data
                 })
