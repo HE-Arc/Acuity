@@ -12,6 +12,7 @@
                     <div class="w100 comment-box" v-for="a in assess" :key="a">
                         <p :class="{border: a.comment == ''}" class="title">
                             <q-button theme="link">{{a.from_user.first_name}} {{a.from_user.last_name}}</q-button> 
+
                             <label class="space-left accent-text">{{a.score}}</label>
                         </p>
                         <p v-if="a.comment != ''" class="comment">{{a.comment}}</p>
