@@ -62,12 +62,12 @@ export default {
     },
     methods: {
         getExistentAssess(){
-            axios.get(this.$router.routeApi('/assess/4/myAssessOf/'))
+            axios.get(this.$router.routeApi('/assess/'+this.user.id+'/myAssessOf/'))
                 .then(response=>{
                     if(response.status == 204)
                         this.getUserInfos()
                     else{
-                        this.fillUser(response.data.toUser)
+                        this.fillUser(response.data.to_user)
                         this.fillAssess(response.data)
                     }   
                 })
@@ -105,7 +105,7 @@ export default {
         send(){
             const data = {
                 score: this.assess.score,
-                toUser: this.$route.params.id,
+                to_user: this.$route.params.id,
                 comment: this.assess.comment,
             }
 
