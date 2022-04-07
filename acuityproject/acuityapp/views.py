@@ -73,12 +73,10 @@ class AssessViewSet(viewsets.ModelViewSet):
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     
     @action(detail=True, methods=['get'])
     def assess(self, request, pk):
-        connected = request.user
-        
         toUser = User.objects.get(pk=pk)
         assess = Assess.objects.filter(toUser=toUser)
         
@@ -86,17 +84,18 @@ class UsersViewSet(viewsets.ModelViewSet):
         return JsonResponse(serializer.data, safe=False)
 
     @action(detail=False, methods=['get'])
+    def myuser(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        
+        return JsonResponse(serializer.data, safe=False)
+        
+
+    @action(detail=False, methods=['get'])
     def get_asc(self, request):
         user = User.objects.all().order_by('score_mean')
 
         return Response(UserSerializer.data)
-
-        
-        toUser = User.objects.get(pk=pk)
-        assess = Assess.objects.filter(toUser=toUser)
-        
-        serializer = AssessSerializer(assess, context={'request':request}, many=True)
-        return JsonResponse(serializer.data, safe=False)
     
     def create(self, validated_data):   
         validated_data = validated_data.data
