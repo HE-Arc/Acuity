@@ -1,6 +1,6 @@
 <template>
     <div class="assess h100">
-        <close-header></close-header>
+        <main-header :isFixed="true" :isClose="true"></main-header>
 
         <div class="column">
 
@@ -30,11 +30,11 @@
 </template>
 
 <script>
-import CloseHeader from './CloseHeader.vue'
 //import QrcodeVue from 'qrcode.vue'
 import axios from 'axios'
+import MainHeader from './MainHeader.vue';
 export default {
-  components: { CloseHeader },
+  components: { MainHeader},
     name: 'AssessUser',
     data() {
         return{

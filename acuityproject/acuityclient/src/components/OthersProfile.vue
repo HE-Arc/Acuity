@@ -1,6 +1,6 @@
 <template>
     <div class="assess h100">
-        <close-header></close-header>
+        <main-header :isClose="true" :isFixed="true"></main-header>
 
         <div class="column">
             <div class='item h20'><h1 theme="link">{{user.firstName+" "+user.lastName}}</h1></div>
@@ -24,10 +24,10 @@
 </template>
 
 <script>
-import CloseHeader from './CloseHeader.vue'
 import axios from 'axios'
+import MainHeader from './MainHeader.vue';
 export default {
-  components: { CloseHeader },
+  components: { MainHeader},
     name: 'AssessUser',
     data() {
         return{
