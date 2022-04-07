@@ -65,7 +65,7 @@ export default {
 
                     localStorage.setItem("token", token)
 
-                    this.$router.push('/')
+                    this.$router.push('/log-in')
                 })
                 .catch(error => {
                     if (error.response.status == 400){

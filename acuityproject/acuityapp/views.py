@@ -80,7 +80,7 @@ class AssessViewSet(viewsets.ModelViewSet):
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     
     @action(detail=True, methods=['get'])
     def assess(self, request, pk):
@@ -91,6 +91,12 @@ class UsersViewSet(viewsets.ModelViewSet):
         return JsonResponse(serializer.data, safe=False)
 
     @action(detail=False, methods=['get'])
+    def myuser(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        
+        return JsonResponse(serializer.data, safe=False)
+        
     def best_users(self, request):
 
         users = User.objects.all().order_by('-score_mean')[:10]
