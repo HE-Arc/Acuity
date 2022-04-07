@@ -1,6 +1,6 @@
 <template>
     <div class="assess">
-        <close-header></close-header>
+        <main-header :isClose="true"></main-header>
 
         <div class="column">
             <div class='item h20'><q-button @click="$router.push('/')" theme="link"><h1>{{user.firstName+" "+user.lastName}}</h1></q-button></div>
@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import CloseHeader from './CloseHeader.vue'
 import QrcodeVue from 'qrcode.vue'
 import axios from 'axios'
+import MainHeader from './MainHeader.vue';
 export default {
-  components: { CloseHeader, QrcodeVue },
+  components: { QrcodeVue, MainHeader},
     name: 'AssessUser',
     data() {
         return{

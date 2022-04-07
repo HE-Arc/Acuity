@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">   
 
-    <main-header fixed="True"></main-header>
+    <main-header></main-header>
     <div class="column">
       <div v-if="is_dsc" class="item h20 direction-column">
         <h3>Here are the <label class="accent-text">worst</label> citizens</h3>
