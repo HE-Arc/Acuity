@@ -44,7 +44,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     email = models.EmailField(_('email address'), blank=True,unique=True)
-    profile = models.CharField(_('profile'), max_length=255, blank=True) # add
     
     score_mean = models.FloatField(default=3.0)
     

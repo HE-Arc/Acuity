@@ -1,9 +1,9 @@
 <template>
-    <div class="assess">
+    <div class="assess h100">
         <pop-up hidden size="200" :data="qrcode" />
-        <close-header></close-header>
+        <main-header :isClose="true" :isFixed="true"></main-header>
         <div class="column">
-            <div class='item h20'><h1 theme="link">{{user.firstName+" "+user.lastName}}</h1>
+            <div class='item h20'><h1>{{user.firstName+" "+user.lastName}}</h1>
                 <pop-up @click="popUpClick()" :data="qrcode" size="25" />
             </div>
             <div class="item h20 assess-counter">{{user.scoreMean.toFixed(1)}}</div>
@@ -13,8 +13,9 @@
                 <q-scrollbar theme="secondary" class="rounded-border w80">
                     <div class="w100 comment-box" v-for="a in assess" :key="a">
                         <p :class="{border: a.comment == ''}" class="title">
-                            <q-button theme="link">{{a.fromUser.first_name}} {{a.fromUser.last_name}}</q-button> 
-                            <label class="accent-text">{{a.score}}</label>
+                            <q-button theme="link">{{a.from_user.first_name}} {{a.from_user.last_name}}</q-button> 
+
+                            <label class="space-left accent-text">{{a.score}}</label>
                         </p>
                         <p v-if="a.comment != ''" class="comment">{{a.comment}}</p>
                     </div>
@@ -26,12 +27,12 @@
 </template>
 
 <script>
-import CloseHeader from './CloseHeader.vue'
 import axios from 'axios'
 import PopUp from './PopUp.vue'
+import MainHeader from './MainHeader.vue'
 
 export default {
-  components: { CloseHeader, PopUp },
+  components: { PopUp, MainHeader },
     name: 'MyProfile',
     data() {
         return{
@@ -53,7 +54,7 @@ export default {
     },
     methods: {
         getUserInfos(){
-            axios.get(this.$router.routeApi('/myuser/'))
+            axios.get(this.$router.routeApi('/users/myuser/'))
                 .then(response => {
                     this.user.id = response.data.id
                     this.user.firstName = response.data.first_name

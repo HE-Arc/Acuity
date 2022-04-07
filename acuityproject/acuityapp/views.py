@@ -97,6 +97,7 @@ class UsersViewSet(viewsets.ModelViewSet):
         
         return JsonResponse(serializer.data, safe=False)
         
+    @action(detail=False, methods=['get'])
     def best_users(self, request):
 
         users = User.objects.all().order_by('-score_mean')[:10]

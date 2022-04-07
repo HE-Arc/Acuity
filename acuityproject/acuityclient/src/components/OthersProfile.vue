@@ -3,7 +3,7 @@
         <main-header :isClose="true" :isFixed="true"></main-header>
 
         <div class="column">
-            <div class='item h20'><h1 theme="link">{{user.firstName+" "+user.lastName}}</h1></div>
+            <div class='item h20'><h1>{{user.firstName+" "+user.lastName}}</h1></div>
             <div class="item h20 assess-counter">{{user.scoreMean.toFixed(1)}}</div>
 
             <div class="column item h60 comments-container">

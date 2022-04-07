@@ -28,7 +28,7 @@ const router = createRouter({
 })
 
 router.routeApi = function(l){
-    return 'https://acuity.srvz-webapp.he-arc.ch/api/' + l
+    return 'http://localhost:8000/api' + l
 }
 
 export default router

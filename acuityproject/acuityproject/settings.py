@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -102,13 +101,8 @@ WSGI_APPLICATION = 'acuityproject.wsgi.application'
 
 DATABASES = {
     'default': {
-		'ENGINE'	: 'django.db.backends.mysql',
-		'NAME'		: 'acuity',
-		'USER'		: os.environ['GROUPNAME'],
-		'PASSWORD'	: os.environ['PASSWORD'],
-		'HOST'		: 'mysql',
-		'PORT'		: '3306',
-		'OPTIONS'	: {'ssl_mode': 'DISABLED'},
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
