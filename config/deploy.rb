@@ -8,7 +8,7 @@ set :git_http_username, "NeiBenoit"
 ask(:github_token, "github_token", echo: false)
 set :git_http_password, fetch((:github_token))
 
-set :branch, "dev"
+set :branch, "deploy"
 
 # TODO change branch to master on deploy
 
