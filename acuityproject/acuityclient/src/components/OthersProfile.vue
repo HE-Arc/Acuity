@@ -11,7 +11,7 @@
                 <q-scrollbar theme="secondary" class="rounded-border w80">
                     <div class="w100 comment-box" v-for="a in assess" :key="a">
                         <p :class="{border: a.comment == ''}" class="title">
-                            <q-button theme="link">{{a.fromUser.first_name}} {{a.fromUser.last_name}}</q-button> 
+                            <q-button theme="link">{{a.from_user.first_name}} {{a.from_user.last_name}}</q-button> 
                             <label class="space-left accent-text">{{a.score}}</label>
                         </p>
                         <p v-if="a.comment != ''" class="comment">{{a.comment}}</p>
@@ -48,6 +48,7 @@ export default {
         getUserInfos(){
             axios.get(this.$router.routeApi('/users/' + this.$route.params.id + '/'))
                 .then(response => {
+                    console.log(response)
                     this.user.id = response.data.id
                     this.user.firstName = response.data.first_name
                     this.user.lastName = response.data.last_name

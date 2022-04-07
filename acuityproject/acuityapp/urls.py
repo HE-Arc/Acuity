@@ -8,8 +8,6 @@ router.register(r'users', views.UsersViewSet)
 
 # define the urls
 urlpatterns = [
-    path('tasks/', views.tasks),
-    path('tasks/<int:pk>/', views.task_detail),
     #path('assess/', views.AssessCreateView.as_view()),
     path('', include(router.urls))
 ]
