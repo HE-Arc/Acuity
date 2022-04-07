@@ -1,18 +1,10 @@
-# from crypt import methods
 from django.shortcuts import render
-# from html5lib import serialize
-# from html5lib import serialize
-# parsing data from the client
 from rest_framework.parsers import JSONParser
-# To bypass having a CSRF token
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-# for sending response to the client
 from django.http import HttpResponse, JsonResponse
-# API definition for task
-from .serializers import TaskSerializer, AssessSerializer, UserSerializer
-# Task model
-from .models import Task, Assess, User
+from .serializers import AssessSerializer, UserSerializer
+from .models import Assess, User
 
 from rest_framework.views import APIView
 from rest_framework.decorators import action
@@ -115,29 +107,4 @@ class UsersViewSet(viewsets.ModelViewSet):
         
         return Response({'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
         
-        
-    
-@csrf_exempt
-def tasks(request):
-    if(request.method == 'GET'):
-        # get all the tasks
-        tasks = Task.objects.all()
-        # serialize the task data
-        serializer = TaskSerializer(tasks, many=True)
-        # return a Json response
-        return JsonResponse(serializer.data,safe=False)
-    elif(request.method == 'POST'):
-        # parse the incoming information
-        data = JSONParser().parse(request)
-        # instanciate with the serializer
-        serializer = TaskSerializer(data=data)
-        # check if the sent information is okay
-        if(serializer.is_valid()):
-            # if okay, save it on the database
-            serializer.save()
-            # provide a Json Response with the data that was saved
-            return JsonResponse(serializer.data, status=201)
-            # provide a Json Response with the necessary error information
-        return JsonResponse(serializer.errors, status=400)
-
         

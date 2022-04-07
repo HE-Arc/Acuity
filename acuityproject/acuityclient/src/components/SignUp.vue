@@ -1,9 +1,8 @@
 <template>
 
     <div class="h100">
-        <main-header :isFixed="true"></main-header>
         <div class="log-in">
-        <h1>Acuity</h1>
+        <h1><img class="mini-logo block__content" src="../assets/Vector.svg">Acuity</h1>
         <h3>Sign up</h3>
         <q-form ref="form" :model="model" :rules="rules">
             <q-form-item label="First name" prop="firstName">
@@ -29,9 +28,8 @@
 
 <script>
 import axios from 'axios'
-import MainHeader from './MainHeader.vue'
 export default {
-  components: { MainHeader },
+  components: { },
     name: 'SignUp',
     data() {
         return{
@@ -54,7 +52,7 @@ export default {
                 password: {
                     required: true
                 },
-                emailP: {
+                email: {
                     required: true,
                 },
             },

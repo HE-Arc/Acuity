@@ -233,6 +233,10 @@ a{
     image-rendering: smooth;
 }
 
+.mini-logo{
+    max-height: 20px;
+}
+
 .q-col:first-of-type{
     padding-left: 0 !important;
 }

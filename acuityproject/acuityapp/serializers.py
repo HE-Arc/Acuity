@@ -1,11 +1,6 @@
 from rest_framework import routers,serializers,viewsets
-from .models import Task, Assess, User
+from .models import Assess, User
 from djoser.serializers import UserSerializer
-
-class TaskSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Task
-        fields = ['id', 'title', 'description', 'completed', 'created_at']
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
