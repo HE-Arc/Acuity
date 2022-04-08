@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-&-6d0v7ll5(*af++^h_+##xw51+wims7v_i39f^hve=!gda16-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['kubernetes.docker.internal','acuity.srvz-webapp.he-arc.ch']
 
