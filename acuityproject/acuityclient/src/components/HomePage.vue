@@ -15,7 +15,7 @@
         <div class="users-list">
           <button v-for="user in users" :key="user" class="user-button w100">
             <div class="column-list user-name">
-                {{ user.first_name }}
+                {{ user.first_name }} {{user.last_name}}
             </div>
             <div class="column-list score-mean">
                 {{ user.score_mean.toFixed(1) }}

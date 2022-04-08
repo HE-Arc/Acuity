@@ -149,6 +149,10 @@ textarea.focus-visible{
     font-size: 130%;
 }
 
+.user-button:hover .score-mean{
+    color: white;
+}
+
 .user-button:first-of-type{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -164,6 +168,7 @@ textarea.focus-visible{
     text-align: right;
     justify-content: center;
     padding-right: 20px;
+    font-size: large;
 }
 
 .user-name{

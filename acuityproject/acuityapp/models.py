@@ -17,6 +17,8 @@ class UserManager(BaseUserManager):
         if not last_name and not first_name:
             raise ValueError('The given last and first names must be set')
         email = self.normalize_email(email)
+        last_name = last_name.capitalize()
+        first_name = first_name.capitalize()
         user = self.model(first_name=first_name, last_name=last_name, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -39,23 +41,6 @@ class UserManager(BaseUserManager):
         return self._create_user(first_name, last_name, email, password, **extra_fields)
     
 class User(AbstractBaseUser, PermissionsMixin):
-    """
-    An abstract base class implementing a fully featured User model with
-    admin-compliant permissions.
-    Username and password are required. Other fields are optional.
-    """
-    # username_validator = UnicodeUsernameValidator()
-
-    # username = models.CharField(
-    #     _('username'),
-    #     max_length=150,
-    #     unique=True,
-    #     help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
-    #     validators=[username_validator],
-    #     error_messages={
-    #         'unique': _("A user with that username already exists."),
-    #     },
-    # )
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     email = models.EmailField(_('email address'), blank=True,unique=True)
@@ -90,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _('users')
         
     def update_mean(self):
-        assess = Assess.objects.filter(toUser=self)
+        assess = Assess.objects.filter(to_user=self)
         self.score_mean = sum((a.score for a in assess))/len(assess)
         self.save()
 
@@ -128,9 +113,9 @@ class Task(models.Model):
         
 class Assess(models.Model):
     score = models.IntegerField()
-    fromUser = models.ForeignKey(User, on_delete=models.CASCADE)
-    toUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='toUser')
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='to_user')
     comment = models.CharField(max_length=250, null=True)
 
     def __str__(self):
-        return str(self.score) + " from: " + str(self.fromUser) + ", to: " + str(self.toUser)
+        return str(self.score) + " from: " + str(self.from_user) + ", to: " + str(self.to_user)
