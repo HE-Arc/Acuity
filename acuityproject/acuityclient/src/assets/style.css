@@ -264,6 +264,7 @@ a{
 
 .qr-container{
     margin: auto;
+    padding: 20px;
 }
 
 .fixed{position: fixed;}

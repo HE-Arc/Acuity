@@ -1,6 +1,6 @@
 <template>
     <div class="qr-container">
-        <qrcode-vue :size="size" :value="data" level="H" background="#edf1f4" foreground="#2c3e50"/>
+        <qrcode-vue :size="size" :value="data" level="H" background="#ffffff" foreground="#2c3e50"/>
     </div>
 </template>
 

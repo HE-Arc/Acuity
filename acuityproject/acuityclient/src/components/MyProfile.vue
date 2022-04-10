@@ -68,7 +68,7 @@ export default {
                     this.user.scoreMean = response.data.score_mean
                 })
                 .then(() => this.getAssess())
-                .then(() => this.qrcode = "http://localhost:8081/#/assess/" + this.user.id)
+                .then(() => this.qrcode = location.origin + "/#/assess/" + this.user.id)
                 .catch(error => {
                     let status = error.response.status;
                     if(status == 401)
@@ -77,7 +77,7 @@ export default {
                 })
         },
         getAssess(){
-            axios.get('http://localhost:8000/api/users/' + this.user.id + '/assess/')
+            axios.get(this.$router.routeApi("/users/" + this.user.id + '/assess/'))
                 .then(response => {
                     this.assess = response.data
                     console.log(response)
