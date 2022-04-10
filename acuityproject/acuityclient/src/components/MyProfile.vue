@@ -3,14 +3,16 @@
         <pop-up hidden size="200" :data="qrcode" />
         <main-header :isClose="true" :isFixed="true"></main-header>
         <div class="column">
-            <div class='item h20'><h1>{{user.firstName+" "+user.lastName}}</h1>
-                <pop-up @click="popUpClick()" :data="qrcode" size="25" />
+            <div class='item h20'>
+                <h1 @click="popUpClick()">{{user.firstName+" "+user.lastName}}</h1>
+                <!--<pop-up class="mini-qr" @click="popUpClick()" :data="qrcode" size="25" />-->
             </div>
             <div class="item h20 assess-counter">{{user.scoreMean.toFixed(1)}}</div>
 
-            <div class="column item h60 comments-container">
+            <div class="column item h50 comments-container">
 
                 <q-scrollbar theme="secondary" class="rounded-border w80">
+                    <p v-if="Object.keys(assess).length == 0">Nobody has judged you for now</p>
                     <div class="w100 comment-box" v-for="a in assess" :key="a">
                         <p :class="{border: a.comment == ''}" class="title">
                             <q-button theme="link">{{a.from_user.first_name}} {{a.from_user.last_name}}</q-button> 
@@ -21,6 +23,7 @@
                     </div>
                 </q-scrollbar>
             </div>
+            <q-button @click="popUpClick()" class="item h10">MY QR</q-button>
         </div>
 
     </div>
@@ -30,6 +33,8 @@
 import axios from 'axios'
 import PopUp from './PopUp.vue'
 import MainHeader from './MainHeader.vue'
+import {useMessageBox} from '@qvant/qui-max';
+import { defineAsyncComponent } from '@vue/runtime-core';
 
 export default {
   components: { PopUp, MainHeader },
@@ -65,9 +70,10 @@ export default {
                 .then(() => this.getAssess())
                 .then(() => this.qrcode = "http://localhost:8081/#/assess/" + this.user.id)
                 .catch(error => {
-                    if (error.response.status == 401){
-                        this.$router.push('/log-in')
-                    }
+                    let status = error.response.status;
+                    if(status == 401)
+                        this.$router.push("/log-in")
+                    console.log(error)
                 })
         },
         getAssess(){
@@ -77,14 +83,28 @@ export default {
                     console.log(response)
                 })
                 .catch(error => {
+                    let status = error.response.status;
+                    if(status == 401)
+                        this.$router.push("/log-in")
                     console.log(error)
                 })
         },
-        popUpClick(){
-            this.$swal({
-                title: 'Your QRCode',
-                html: this.fullQr,
-            })
+        async popUpClick(){
+            const messageBox = useMessageBox()
+            let r = await messageBox(
+                {
+                    component: defineAsyncComponent(()=> import('./PopUp.vue')),
+                    props:{
+                        data: this.qrcode,
+                        size: 250
+                    }
+                }
+            )
+            console.log(r)
+            // this.$swal.fire({
+            //     title: 'Your QRCode',
+            //     html: this.fullQr,
+            // })
         }
     },
 }

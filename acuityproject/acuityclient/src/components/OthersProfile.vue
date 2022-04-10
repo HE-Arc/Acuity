@@ -7,7 +7,7 @@
             <div class="item h20 assess-counter">{{user.scoreMean.toFixed(1)}}</div>
 
             <div class="column item h60 comments-container">
-
+                <p v-if="Object.keys(assess).length == 0">Nobody has judged him for now</p>
                 <q-scrollbar theme="secondary" class="rounded-border w80">
                     <div class="w100 comment-box" v-for="a in assess" :key="a">
                         <p :class="{border: a.comment == ''}" class="title">
@@ -60,6 +60,9 @@ export default {
                     this.getAssess()
                 })
                 .catch(error => {
+                    let status = error.response.status;
+                    if(status == 401)
+                        this.$router.push("/log-in")
                     console.log(error)
                 })
         },
@@ -69,6 +72,9 @@ export default {
                     this.assess = response.data
                 })
                 .catch(error => {
+                    let status = error.response.status;
+                    if(status == 401)
+                        this.$router.push("/log-in")
                     console.log(error)
                 })
         }

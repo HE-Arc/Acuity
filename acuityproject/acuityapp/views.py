@@ -1,26 +1,18 @@
-# from crypt import methods
 from django.shortcuts import render
-# from html5lib import serialize
-# from html5lib import serialize
-# parsing data from the client
 from rest_framework.parsers import JSONParser
-# To bypass having a CSRF token
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-# for sending response to the client
 from django.http import HttpResponse, JsonResponse
-# API definition for task
-from .serializers import TaskSerializer, AssessSerializer, UserSerializer
-# Task model
-from .models import Task, Assess, User
+from .serializers import AssessSerializer, UserSerializer
+from .models import Assess, User
 
 from rest_framework.views import APIView
 from rest_framework.decorators import action
 from rest_framework import permissions
 from rest_framework.response import Response 
 from django.conf import settings
+from .permissions import UserPermission
 
-# Create your views here.
 
 from django.utils.decorators import method_decorator
 from rest_framework import viewsets, status
@@ -58,10 +50,11 @@ class AssessViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def myAssessOf(self, request, pk):
         to_user_pk = pk
+        print(pk)
         
         from_user = request.user
         existing = Assess.objects.filter(to_user=to_user_pk).filter(from_user=from_user)
-        
+        print(Assess.objects.filter(from_user=request.user))
         try:
             existing = existing.get()
         except Assess.MultipleObjectsReturned: 
@@ -80,7 +73,7 @@ class AssessViewSet(viewsets.ModelViewSet):
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [UserPermission]
     
     @action(detail=True, methods=['get'])
     def assess(self, request, pk):
@@ -99,7 +92,6 @@ class UsersViewSet(viewsets.ModelViewSet):
         
     @action(detail=False, methods=['get'])
     def best_users(self, request):
-
         users = User.objects.all().order_by('-score_mean')[:10]
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
@@ -122,29 +114,4 @@ class UsersViewSet(viewsets.ModelViewSet):
         
         return Response({'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
         
-        
-    
-@csrf_exempt
-def tasks(request):
-    if(request.method == 'GET'):
-        # get all the tasks
-        tasks = Task.objects.all()
-        # serialize the task data
-        serializer = TaskSerializer(tasks, many=True)
-        # return a Json response
-        return JsonResponse(serializer.data,safe=False)
-    elif(request.method == 'POST'):
-        # parse the incoming information
-        data = JSONParser().parse(request)
-        # instanciate with the serializer
-        serializer = TaskSerializer(data=data)
-        # check if the sent information is okay
-        if(serializer.is_valid()):
-            # if okay, save it on the database
-            serializer.save()
-            # provide a Json Response with the data that was saved
-            return JsonResponse(serializer.data, status=201)
-            # provide a Json Response with the necessary error information
-        return JsonResponse(serializer.errors, status=400)
-
         

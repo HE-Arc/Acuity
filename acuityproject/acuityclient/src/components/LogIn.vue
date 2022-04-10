@@ -1,35 +1,34 @@
 <template>
     <div class="h100">
-        <main-header :isFixed="true"></main-header>
         <div class="log-in">
-            <h1>Acuity</h1>
+            <h1><img class="mini-logo block__content" src="../assets/Vector.svg">Acuity</h1>
             <h3>Log in</h3>
-                <q-form ref="form" :model="model" :rules="rules">
-                    <q-form-item label="Email" prop="email">
-                        <q-input v-model="model.email" type="text"/>
-                    </q-form-item>
-                    <q-form-item label="Password" prop="password">
-                        <q-input v-model="model.password" type="password"/>
-                    </q-form-item>
-                    
-                    <p v-if="isLoading"><q-button loading>Log in</q-button></p>
-                    <p v-else><q-button @click="submitForm">Log in</q-button></p>
-                </q-form>
+            <q-form ref="form" :model="model" :rules="rules">
+                <q-form-item label="Email" prop="email">
+                    <q-input v-model="model.email" type="text"/>
+                </q-form-item>
+                <q-form-item label="Password" prop="password">
+                    <q-input v-model="model.password" type="password"/>
+                </q-form-item>
+                
+                <p v-if="isLoading"><q-button loading>Log in</q-button></p>
+                <p v-else><q-button @click="submitForm">Log in</q-button></p>
+                <p>or <a @click="$router.push('/sign-up')">sign up</a></p>
+            </q-form>
         </div>
     </div>
 </template>
 
 <script>
-
+// import useNotify from '@qvant/qui-max';
+import { useNotify, NotifyType } from '@qvant/qui-max';
 import axios from 'axios'
-import MainHeader from './MainHeader.vue'
 export default {
-  components: { MainHeader },
+  components: { },
     name: 'LogIn',
-
     data() {
         return{
-            error: '',
+            notifyId: '',
             model:{
                 email: '',
                 password: '',
@@ -57,7 +56,7 @@ export default {
             console.log(formData)
             axios.post(this.$router.routeApi('/token/login'), formData)
                 .then(response => {
-                    console.log(response)
+                    useNotify().closeAll()
                     const token = response.data.auth_token
 
                     this.$store.commit('setToken', token)
@@ -65,12 +64,16 @@ export default {
 
                     localStorage.setItem("token", token)
 
-                    this.$router.push('/log-in')
+                    this.$router.push('/')
                 })
                 .catch(error => {
+
                     if (error.response.status == 400){
-                        this.error = "Wrong credentials"
+                        const notify = useNotify()
+                        notify('Wrong credidentials', {duration: 50000, type: NotifyType.WARNING,})
                     }
+
+                    this.isLoading = false;
                 })
         }
     },

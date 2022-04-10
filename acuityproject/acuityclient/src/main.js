@@ -9,6 +9,4 @@ import '@qvant/qui-max/styles';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-axios.defaults.baseURL = 'http://localhost:8000/'
-
 createApp(App).use(VueSweetalert2).use(Qui).use(store).use(router, axios).mount('#app')
