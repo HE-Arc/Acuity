@@ -102,13 +102,13 @@ WSGI_APPLICATION = 'acuityproject.wsgi.application'
 
 DATABASES = {
     'default': {
-		'ENGINE'	: 'django.db.backends.mysql',
-		'NAME'		: 'acuity',
-		'USER'		: os.environ['GROUPNAME'],
-		'PASSWORD'	: os.environ['PASSWORD'],
-		'HOST'		: 'mysql',
-		'PORT'		: '3306',
-		'OPTIONS'	: {'ssl_mode': 'DISABLED'},
+        'ENGINE'    : 'django.db.backends.mysql',
+        'NAME'      : 'acuity',
+        'USER'      : os.environ['GROUPNAME'],
+        'PASSWORD'  : os.environ['PASSWORD'],
+        'HOST'      : 'mysql',
+        'PORT'      : '3306',
+        'OPTIONS'   : {'ssl_mode': 'DISABLED'},
     }
 }
 

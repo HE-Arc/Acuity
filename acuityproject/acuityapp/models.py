@@ -11,10 +11,8 @@ class UserManager(BaseUserManager):
     use_in_migrations = True
 
     def _create_user(self, first_name, last_name, email, password, **extra_fields):
-        """
-        Create and save a user with the given username, email, and password.
-        """
-        if not last_name and not first_name:
+        
+        if not last_name or not first_name or not email:
             raise ValueError('The given last and first names must be set')
         email = self.normalize_email(email)
         last_name = last_name.capitalize()
@@ -41,10 +39,10 @@ class UserManager(BaseUserManager):
         return self._create_user(first_name, last_name, email, password, **extra_fields)
     
 class User(AbstractBaseUser, PermissionsMixin):
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=150, blank=True)
-    email = models.EmailField(_('email address'), blank=True,unique=True)
-    profile = models.CharField(_('profile'), max_length=255, blank=True) # add
+
+    first_name = models.CharField(_('first name'), max_length=30, blank=False)
+    last_name = models.CharField(_('last name'), max_length=150, blank=False)
+    email = models.EmailField(_('email address'), blank=False,unique=True)
     
     score_mean = models.FloatField(default=3.0)
     
@@ -66,9 +64,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    EMAIL_FIELD = 'email' # fix
-    USERNAME_FIELD = 'email' # fix
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'score_mean'] # fix
+    EMAIL_FIELD = 'email'
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'score_mean']
 
     class Meta:
         verbose_name = _('user')
@@ -84,32 +82,17 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.email = self.__class__.objects.normalize_email(self.email)
 
     def get_full_name(self):
-        """
-        Return the first_name plus the last_name, with a space in between.
-        """
+        
         full_name = '%s %s' % (self.first_name, self.last_name)
         return full_name.strip()
 
     def get_short_name(self):
-        """Return the short name for the user."""
+        
         return self.first_name
 
     def email_user(self, subject, message, from_email=None, **kwargs):
-        """Send an email to this user."""
+        
         send_mail(subject, message, from_email, [self.email], **kwargs)    
-
-# Create your models here.
-class Task(models.Model):
-    #title
-    title = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True) #description
-    completed = models.BooleanField(default=False)
-    #completed
-    created_at = models.DateTimeField(auto_now_add=True) #created_at
-
-    def __str__(self):
-        #return the task title
-        return self.title
         
 class Assess(models.Model):
     score = models.IntegerField()

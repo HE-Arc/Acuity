@@ -8,6 +8,5 @@ router.register(r'users', views.UsersViewSet)
 
 # define the urls
 urlpatterns = [
-    #path('assess/', views.AssessCreateView.as_view()),
     path('', include(router.urls))
 ]

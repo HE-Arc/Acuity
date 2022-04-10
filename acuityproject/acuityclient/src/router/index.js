@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import LogIn from '../components/LogIn.vue'
 import SignUp from '../components/SignUp.vue'
@@ -8,17 +8,17 @@ import OthersProfile from '../components/OthersProfile.vue'
 import HomePage from '../components/HomePage.vue'
 
 const About = { template: '<div>About</div>' }
-const NotFound = { template: '<div>Not Found</div>'}
+const NotFound = { template: '<div>Not Found</div>' }
 
 const routes = [
     { path: '/about', component: About },
-    { path: '/users/:id', component: OthersProfile},
-    { path: '/log-in', component: LogIn},
-    { path: '/sign-up', component: SignUp},
+    { path: '/users/:id', component: OthersProfile },
+    { path: '/log-in', component: LogIn },
+    { path: '/sign-up', component: SignUp },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
-    { path: '/assess/:id', component: AssessUser},
-    { path: '/myprofile', component: MyProfile},
-    { path: '/', component: HomePage}
+    { path: '/assess/:id', component: AssessUser },
+    { path: '/myprofile', component: MyProfile },
+    { path: '/', component: HomePage }
 ]
 
 const router = createRouter({
@@ -27,7 +27,7 @@ const router = createRouter({
     routes, // short for `routes: routes`
 })
 
-router.routeApi = function(l){
+router.routeApi = function (l) {
     return 'https://acuity.srvz-webapp.he-arc.ch/api' + l
 }
 

@@ -33,6 +33,7 @@
 //import QrcodeVue from 'qrcode.vue'
 import axios from 'axios'
 import MainHeader from './MainHeader.vue';
+import { useNotify, NotifyType } from '@qvant/qui-max';
 export default {
   components: { MainHeader},
     name: 'AssessUser',
@@ -62,16 +63,22 @@ export default {
     },
     methods: {
         getExistentAssess(){
-            axios.get(this.$router.routeApi('/assess/'+this.user.id+'/myAssessOf/'))
+            axios.get(this.$router.routeApi('/assess/'+this.$route.params.id+'/myAssessOf/'))
                 .then(response=>{
+                    console.log(response)
                     if(response.status == 204)
                         this.getUserInfos()
                     else{
+                        const notify = useNotify()
+                        notify('Edit your assess !', {duration: 5000, type: NotifyType.INFO,})
                         this.fillUser(response.data.to_user)
                         this.fillAssess(response.data)
                     }   
                 })
                 .catch(error=>{
+                    let status = error.response.status;
+                    if(status == 401 || status==400)
+                        this.$router.push("/log-in")
                     console.log(error)
                 })
         },
@@ -81,6 +88,9 @@ export default {
                     this.fillUser(response.data)
                 })
                 .catch(error => {
+                    let status = error.response.status;
+                    if(status == 401)
+                        this.$router.push("/log-in")
                     console.log(error)
                 })
         },
@@ -111,6 +121,8 @@ export default {
 
             axios.post(this.$router.routeApi('/assess/'), data)
                 .then(()=>{
+                    const notify = useNotify()
+                    notify('Assess correctly added', {duration: 5000, type: NotifyType.SUCCESS,})
                     this.$router.push('/users/'+this.user.id)
                 })
                 .catch(error => {

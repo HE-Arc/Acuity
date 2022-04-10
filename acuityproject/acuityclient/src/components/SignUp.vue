@@ -1,9 +1,8 @@
 <template>
 
     <div class="h100">
-        <main-header :isFixed="true"></main-header>
         <div class="log-in">
-        <h1>Acuity</h1>
+        <h1><img class="mini-logo block__content" src="../assets/Vector.svg">Acuity</h1>
         <h3>Sign up</h3>
         <q-form ref="form" :model="model" :rules="rules">
             <q-form-item label="First name" prop="firstName">
@@ -21,6 +20,7 @@
             
             <p v-if="isLoading"><q-button loading>Sign up</q-button></p>
             <p v-else><q-button @click="submitForm">Sign up</q-button></p>
+            <p>or <a @click="$router.push('/log-in')">log in</a></p>
         </q-form>
         </div>
 
@@ -29,9 +29,8 @@
 
 <script>
 import axios from 'axios'
-import MainHeader from './MainHeader.vue'
 export default {
-  components: { MainHeader },
+  components: { },
     name: 'SignUp',
     data() {
         return{
@@ -54,7 +53,7 @@ export default {
                 password: {
                     required: true
                 },
-                emailP: {
+                email: {
                     required: true,
                 },
             },
