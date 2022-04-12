@@ -5,24 +5,26 @@
             <q-col class="block__col" cols="8"><h1>Acuity</h1></q-col>
             <q-col class="block__col" cols="2" offset="-1">
 
-                <q-context-menu
-                v-if="connected"
-                :menu-items="menuItems"
-                @action="buttonClick"
-                >
-                    <q-button theme="secondary" type="icon" icon="q-icon-account" circle></q-button>
-                </q-context-menu>
+            <q-context-menu
+            class="float-right"
+            v-if="connected"
+            :menu-items="menuItems"
+            @action="buttonClick"
+            >
+                <q-button theme="secondary" type="icon" icon="q-icon-account" circle></q-button>
+            </q-context-menu>
 
-                <q-button v-else @click="this.$router.push('/log-in')" theme="secondary" type="icon" icon="q-icon-login" circle></q-button>
+            <q-button v-else @click="this.$router.push('/log-in')" theme="secondary" type="icon" icon="q-icon-login" circle></q-button>
                 
             </q-col>
         </q-row>
-        <q-button class="close-button" v-if="isClose" @click="$router.push('/')" theme="secondary" type="icon" icon="q-icon-close" circle></q-button>
+        <q-button class="close-button" v-if="isClose" @click="close()" theme="secondary" type="icon" icon="q-icon-close" circle></q-button>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { useNotify } from '@qvant/qui-max';
 
 export default {
     name: 'MainHeader',
@@ -44,7 +46,11 @@ export default {
             ]
         }
     },
-    methods: {                
+    methods: {     
+        close(){
+            useNotify().closeAll()
+            this.$router.push('/')
+        },        
         disconnect() {
             axios.post(this.$router.routeApi('/users/disconnect/'))
                 .then(() => {

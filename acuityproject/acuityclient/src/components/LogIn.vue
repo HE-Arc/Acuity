@@ -20,7 +20,6 @@
 </template>
 
 <script>
-// import useNotify from '@qvant/qui-max';
 import { useNotify, NotifyType } from '@qvant/qui-max';
 import axios from 'axios'
 export default {
