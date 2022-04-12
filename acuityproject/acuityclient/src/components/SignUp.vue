@@ -2,7 +2,7 @@
 
     <div class="h100">
         <div class="log-in">
-        <h1><img class="mini-logo block__content" src="../assets/Vector.svg">Acuity</h1>
+        <h1><img class="mini-logo block__content" src="../assets/logo.svg">Acuity</h1>
         <h3>Sign up</h3>
         <q-form ref="form" :model="model" :rules="rules">
             <q-form-item label="First name" prop="firstName">

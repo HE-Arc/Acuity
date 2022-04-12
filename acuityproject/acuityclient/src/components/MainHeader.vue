@@ -1,7 +1,7 @@
 <template>
     <div class="header" :class="{fixed : isFixed}">
         <q-row v-if="!isClose" class="block__row w100 h100 margin0" align-v="center">
-            <q-col class="block__col h100 logo-container" cols="2"><img class="logo block__content" src="../assets/Vector.svg"></q-col>
+            <q-col class="block__col h100 logo-container" cols="2"><img class="logo block__content" src="../assets/logo.svg"></q-col>
             <q-col class="block__col" cols="8"><h1>Acuity</h1></q-col>
             <q-col class="block__col" cols="2" offset="-1">
 
