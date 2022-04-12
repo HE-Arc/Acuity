@@ -106,7 +106,7 @@ class UsersViewSet(viewsets.ModelViewSet):
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['post'])
     def disconnect(self, request):
         request.user.auth_token.delete()
         logout(request)
