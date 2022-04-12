@@ -42,7 +42,7 @@ export default {
             assess: {},
         }
     },
-    mounted(){
+    beforeMount(){
         this.getUserInfos()
     },
     methods: {

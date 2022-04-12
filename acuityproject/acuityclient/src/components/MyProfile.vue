@@ -7,6 +7,11 @@
                 <h1 @click="popUpClick()">{{user.firstName+" "+user.lastName}}</h1>
                 <!--<pop-up class="mini-qr" @click="popUpClick()" :data="qrcode" size="25" />-->
             </div>
+            <div class='item h10'>
+                <q-button theme="secondary" @click="disconnect()">
+                    Disconnect
+                </q-button>
+            </div>
             <div class="item h20 assess-counter">{{user.scoreMean.toFixed(1)}}</div>
 
             <div class="column item h50 comments-container">
@@ -58,6 +63,16 @@ export default {
         this.fullQr = this.$el.children[0].children[0]
     },
     methods: {
+        
+        disconnect() {
+            axios.get(this.$router.routeApi('/users/disconnect/'))
+                .then(response => {
+                    this.$router.push('/log-in')
+                    console.log(response)
+                })
+        },
+
+
         getUserInfos(){
             axios.get(this.$router.routeApi('/users/myuser/'))
                 .then(response => {
