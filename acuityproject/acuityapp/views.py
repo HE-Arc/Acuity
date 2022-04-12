@@ -1,3 +1,4 @@
+from urllib.request import Request
 from django.shortcuts import render
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
@@ -16,6 +17,8 @@ from .permissions import UserPermission
 
 from django.utils.decorators import method_decorator
 from rest_framework import viewsets, status
+
+from django.contrib.auth import logout
 
 class AssessViewSet(viewsets.ModelViewSet):
     queryset = Assess.objects.all()
@@ -102,7 +105,14 @@ class UsersViewSet(viewsets.ModelViewSet):
         users = User.objects.all().order_by('score_mean')[:10]
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
-    
+
+    @action(detail=False, methods=['post'])
+    def disconnect(self, request):
+        request.user.auth_token.delete()
+        logout(request)
+        return Response({'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
+
+
     def create(self, validated_data):   
         validated_data = validated_data.data
         User.objects.create_user(validated_data['first_name'],
@@ -110,8 +120,7 @@ class UsersViewSet(viewsets.ModelViewSet):
                     validated_data['email'], 
                     validated_data['password'])
         
-        
-        
         return Response({'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
+
         
         

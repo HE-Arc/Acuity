@@ -1,7 +1,7 @@
 <template>
     <div class="h100">
         <div class="log-in">
-            <h1><img class="mini-logo block__content" src="../assets/Vector.svg">Acuity</h1>
+            <h1><img class="mini-logo block__content" src="../assets/logo.svg">Acuity</h1>
             <h3>Log in</h3>
             <q-form ref="form" :model="model" :rules="rules">
                 <q-form-item label="Email" prop="email">
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-// import useNotify from '@qvant/qui-max';
 import { useNotify, NotifyType } from '@qvant/qui-max';
 import axios from 'axios'
 export default {

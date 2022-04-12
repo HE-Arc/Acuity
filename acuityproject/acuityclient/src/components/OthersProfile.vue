@@ -7,17 +7,7 @@
             <div class="item h20 assess-counter">{{user.scoreMean.toFixed(1)}}</div>
 
             <div class="column item h60 comments-container">
-                <p v-if="Object.keys(assess).length == 0">Nobody has judged him for now</p>
-                <q-scrollbar theme="secondary" class="rounded-border w80">
-                    <div class="w100 comment-box" v-for="a in assess" :key="a">
-                        <p :class="{border: a.comment == ''}" class="title">
-                            <q-button theme="link">{{a.from_user.first_name}} {{a.from_user.last_name}}</q-button> 
-
-                            <label class="space-left accent-text">{{a.score}}</label>
-                        </p>
-                        <p v-if="a.comment != ''" class="comment">{{a.comment}}</p>
-                    </div>
-                </q-scrollbar>
+                <assess-list v-if="user.id!=-1" :userId="user.id"/>
             </div>
         </div>
 
@@ -27,8 +17,10 @@
 <script>
 import axios from 'axios'
 import MainHeader from './MainHeader.vue';
+import AssessList from './AssessList.vue'
+import { useNotify, NotifyType } from '@qvant/qui-max';
 export default {
-  components: { MainHeader},
+  components: { MainHeader, AssessList },
     name: 'AssessUser',
     data() {
         return{
@@ -38,14 +30,20 @@ export default {
                 lastName: '',
                 email: '',
                 scoreMean: -1,
-            },
-            assess: {},
+            }
         }
     },
-    mounted(){
+    beforeMount(){
         this.getUserInfos()
     },
     methods: {
+        checkDangerosity(){
+            const notify = useNotify()
+            if(this.user.scoreMean <= 1.5)
+                notify('Be careful, this person could be dangerous', {duration: 50000, type: NotifyType.WARNING,})
+            else if(this.user.scoreMean < 3)
+                notify('Be careful, this person could be bad company', {duration: 50000, type: NotifyType.WARNING,})
+        },
         getUserInfos(){
             axios.get(this.$router.routeApi('/users/' + this.$route.params.id + '/'))
                 .then(response => {
@@ -57,19 +55,7 @@ export default {
                     this.user.scoreMean = response.data.score_mean
                 })
                 .then(()=>{
-                    this.getAssess()
-                })
-                .catch(error => {
-                    let status = error.response.status;
-                    if(status == 401)
-                        this.$router.push("/log-in")
-                    console.log(error)
-                })
-        },
-        getAssess(){
-            axios.get(this.$router.routeApi('/users/'+this.$route.params.id+ '/assess/'))
-                .then(response => {
-                    this.assess = response.data
+                    this.checkDangerosity()
                 })
                 .catch(error => {
                     let status = error.response.status;
