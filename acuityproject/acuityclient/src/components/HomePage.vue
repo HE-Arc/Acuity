@@ -21,9 +21,9 @@
         </p>
       </div>
       <div class="item h60">
-        <div class="users-list">
+        <div class="users-list h100">
           <button
-            v-for="user in users" :key="user" @click="toUserPage(user.id)" class="user-button w100">
+            v-for="user in users" :key="user" @click="toUserPage(user.id)" class="user-button w100 h10">
             <div class="column-list user-name">
               {{ user.first_name }} {{ user.last_name }}
             </div>

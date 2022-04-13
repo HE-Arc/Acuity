@@ -15,7 +15,7 @@
             </q-context-menu>
 
             <q-button v-else @click="this.$router.push('/log-in')" theme="secondary" type="icon" icon="q-icon-login" circle></q-button>
-                
+
             </q-col>
         </q-row>
         <q-button class="close-button" v-if="isClose" @click="close()" theme="secondary" type="icon" icon="q-icon-close" circle></q-button>
@@ -46,18 +46,18 @@ export default {
             ]
         }
     },
-    methods: {     
+    methods: {
         close(){
             useNotify().closeAll()
             this.$router.push('/')
-        },        
+        },
         disconnect() {
             axios.post(this.$router.routeApi('/users/disconnect/'))
                 .then(() => {
                     this.$store.commit('removeToken')
                     localStorage.removeItem('token')
                     axios.defaults.headers.common['Authorization'] = ''
-                    
+
                     this.$router.push('/log-in')
                 })
                 .catch(error => {
