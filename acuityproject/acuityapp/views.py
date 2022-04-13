@@ -81,7 +81,7 @@ class UsersViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def assess(self, request, pk):
         to_user = User.objects.get(pk=pk)
-        assess = Assess.objects.filter(to_user=to_user)
+        assess = Assess.objects.filter(to_user=to_user).order_by("-pk")
         
         serializer = AssessSerializer(assess, context={'request':request}, many=True)
         return JsonResponse(serializer.data, safe=False)
@@ -111,7 +111,6 @@ class UsersViewSet(viewsets.ModelViewSet):
         request.user.auth_token.delete()
         logout(request)
         return Response({'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
-
 
     def create(self, validated_data):   
         validated_data = validated_data.data
