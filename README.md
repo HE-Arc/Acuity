@@ -1,33 +1,48 @@
 # Acuity
 
-## Descriptif
+## Description
 
 Acuity est une application web _mobile first_ permettant aux individus d'une population d'évaluer leurs fréquentations. A la manière, de l'application dans l'épisode "Chute libre" de Black Mirror, chaque personne peut donner des notes aux autres en fonction de leurs agissements. La moyenne est calculée d'après toutes ses notes et est visible par tous. L'interface pour noter et commenter les utilisateurs se fait par la lecture d'un code QR que l'on pourrait imaginer porté par tous.
 
 ## Ranking
 
-Une personne peut donner comme note, un nombre entier compris entre 0 et 5. La moyenne de chaque utilisateur est elle, affichée comme décimale avec un chiffre après la virgule. Chaque note a un coefficient; celui-ci est calculé d'après la moyenne de la personne qui juge. Le coefficient peut donc varier, par exemple: si la moyenne de la personne qui m'a noté hier baisse, ma moyenne va changer en fonction. 
+Une personne peut donner comme note, un nombre entier compris entre 0 et 5. La moyenne de chaque utilisateur est elle, affichée comme décimale avec un chiffre après la virgule. Une personne ne peut juger quelqu'un d'autre qu'une seule fois. Si je souhaite voter à nouveau pour un individu, mon ancienne note est modifiée.
 
-Une personne ne peut juger quelqu'un d'autre qu'une seule fois. Si je souhaite voter à nouveau pour un individu, mon ancienne note est modifiée.
+## Installation
 
-## Contenu
+### Requirements
 
-### MVP
+Installing required python dependencies in the newly created virtual environement
 
-- Register / Login / Logout
-- Page profil personnel avec code QR (lien pour noter le profil)
-- Page d'accueil (description et détails de l'app)
-- Page du classement
-- Page profil à noter (profil autres utilisateurs)
+```bash
+# In project root
+pip install -r requirements.txt
+```
 
-### Secondaire
+Running the application locally
 
-- Scan de code QR _in app_
-- Création et affichage de commentaire lors de la notation
+```bash
+# /acuityproject/acuityclient/
+npm install
+npm run serve
+```
 
-### Optionnel
+```bash
+# /acuityproject/
+pip manage.py runserver
+```
 
-- Création d'évennements exclusif aux notes des utilisateurs
-- Graphique d'évolution des notes d'un utilisateur
+## Dependencies
 
-https://hackmd.io/@3-timeshare/SklbkGlCt
+### NodeJS
+
+- @qvant/qui-max v0.9.1
+- axios v0.26.0
+- core-js v3.8.3
+- qrcode.vue v3.3.3
+- vue v3.2.13
+- vue-material-design-icons v5.0.0
+- vue-resource v1.5.3
+- vue-router v4.0.13
+- vue-sweetalert2 v5.0.2
+- vuex v4.0.2
