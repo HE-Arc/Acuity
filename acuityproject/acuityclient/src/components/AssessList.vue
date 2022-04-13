@@ -1,7 +1,8 @@
 <template>
 
         <q-scrollbar theme="secondary" class="rounded-border w80">
-            <p v-if="Object.keys(assess).length == 0">Nobody has judged you for now</p>
+            <p v-if="Object.keys(assess).length == 0 && isYou == true">Nobody has judged you for now</p>
+            <p v-else>Nobody has judged him for now</p>
             <div class="w100 comment-box" v-for="a in assess" :key="a">
                 <p :class="{border: a.comment == ''}" class="title">
                     <q-button @click="$router.push('/users/' + a.from_user.id)" theme="link">{{a.from_user.first_name}} {{a.from_user.last_name}}</q-button> 
@@ -25,7 +26,7 @@ export default {
             assess: {},
         }
     },
-    props: ['userId'],
+    props: ['userId', 'isYou'],
     mounted(){
         this.getAssess()
     },

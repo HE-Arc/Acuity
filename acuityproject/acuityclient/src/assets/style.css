@@ -138,8 +138,8 @@ textarea.focus-visible{
     border: none;
     border-top: solid;
     border-top-width: 1px;
-    background-color: white;
-    border-color: #edf1f4;
+    background-color: var(--color-rgb-white);
+    border-color: lightgray;
 }
 
 .user-button:hover{
