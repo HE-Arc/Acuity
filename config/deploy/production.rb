@@ -5,10 +5,9 @@
 
 # server "example.com", user: "deploy", roles: %w{app db web}, my_property: :my_value
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
+# server "db.example.com", user: "deploy", roles: %w{db}
+
 server "acuity.srvz-webapp.he-arc.ch", user: "poweruser", roles: %w{app db web}, port: 1442
-
-set :deploy_to, "/var/www/#{fetch(:app)}"
-
 
 # role-based syntax
 # ==================
@@ -32,7 +31,11 @@ set :deploy_to, "/var/www/#{fetch(:app)}"
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 
+<<<<<<< HEAD
 
+=======
+set :deploy_to, "/var/www/#{fetch(:application)}"
+>>>>>>> finish
 
 # Custom SSH Options
 # ==================

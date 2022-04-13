@@ -1,8 +1,16 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.16.0"
+lock "~> 3.17.0"
 
 set :application, "acuity"
-set :repo_url, "git@github.com:HE-Arc/Acuity.git"
+
+set :repo_url, "https://github.com/HE-Arc/Acuity.git"
+set :git_http_username, "NeiBenoit"
+ask(:github_token, "github_token", echo: false)
+set :git_http_password, fetch((:github_token))
+
+set :branch, "deploy"
+
+# TODO change branch to master on deploy
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -21,10 +29,17 @@ set :repo_url, "git@github.com:HE-Arc/Acuity.git"
 # set :pty, true
 
 # Default value for :linked_files is []
+<<<<<<< HEAD
 # append :linked_files, "config/database.yml"
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
+=======
+# append :linked_files, "config/database.yml", 'config/master.key'
+
+# Default value for linked_dirs is []
+# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "tmp/webpacker", "public/system", "vendor", "storage"
+>>>>>>> finish
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
