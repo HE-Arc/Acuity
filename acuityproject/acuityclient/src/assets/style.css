@@ -192,6 +192,7 @@ p .q-button{
 
 .comment{
     background-color: white;
+    border-color: #edf1f4;
     border-top-style: outset;
     border-width: 1px;
     margin: 0;
@@ -276,6 +277,7 @@ a{
 .h40{height: 40%;}
 .h50{height: 50%;}
 .h60{height: 60%;}
+.h70{height: 70%;}
 .h80{height: 80%;}
 .h100{height: 100%}
 .margin0{margin: 0 !important;}

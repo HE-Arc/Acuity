@@ -3,7 +3,7 @@
     <main-header></main-header>
     <div class="column">
       <div v-if="is_dsc" class="item h20 direction-column">
-        <h3>Here are the <label class="accent-text">worst</label> citizens</h3>
+        <h3>Here are the <label class="accent-text">worsts</label> citizens</h3>
         <p>
           Check the
           <a @click="is_dsc = false; this.getBestUsers();">
@@ -21,9 +21,9 @@
         </p>
       </div>
       <div class="item h60">
-        <div class="users-list">
+        <div class="users-list h100">
           <button
-            v-for="user in users" :key="user" @click="toUserPage(user.id)" class="user-button w100">
+            v-for="user in users" :key="user" @click="toUserPage(user.id)" class="user-button w100 h10">
             <div class="column-list user-name">
               {{ user.first_name }} {{ user.last_name }}
             </div>

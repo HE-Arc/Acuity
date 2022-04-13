@@ -18,7 +18,7 @@
                 <div class="item h60">
                     <div class="q-form-item w80">
                         <div class="q-form-item__header">
-                            <label for="email" class="q-form-item__label">Email</label>
+                            <label class="q-form-item__label">Comment</label>
                         </div>
                         <textarea class="custom-qui" v-model="assess.comment" placeholder="Comment you judgement..."></textarea>
                     </div>                    

@@ -61,6 +61,11 @@ export default {
     },
     methods: {
         submitForm(){
+            // remove the current token if exists
+            this.$store.commit('removeToken')
+            localStorage.removeItem('token')
+            axios.defaults.headers.common['Authorization'] = ''
+
             const formData = {
                 last_name: this.model.lastName,
                 first_name: this.model.firstName,
