@@ -3,7 +3,7 @@
     <main-header></main-header>
     <div class="column">
       <div v-if="is_dsc" class="item h20 direction-column">
-        <h3>Here are the <label class="accent-text">worst</label> citizens</h3>
+        <h3>Here are the <label class="accent-text">worsts</label> citizens</h3>
         <p>
           Check the
           <a @click="is_dsc = false; this.getBestUsers();">
