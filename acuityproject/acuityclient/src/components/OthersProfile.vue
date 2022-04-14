@@ -7,7 +7,7 @@
             <div class="item h20 assess-counter">{{user.scoreMean.toFixed(1)}}</div>
 
             <div class="column item h60 comments-container">
-                <assess-list v-if="user.id!=-1" :userId="user.id" :isYou="false"/>
+                <assess-list v-if="user.id!=-1" :userId="user.id"/>
             </div>
         </div>
 

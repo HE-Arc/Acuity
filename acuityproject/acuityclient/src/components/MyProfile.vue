@@ -8,7 +8,7 @@
             <div class="item h20 assess-counter">{{user.scoreMean.toFixed(1)}}</div>
 
             <div class="column item h50 comments-container">
-                <assess-list v-if="user.id!=-1" :userId="user.id" :isYou="true"/>
+                <assess-list v-if="user.id!=-1" :userId="user.id"/>
             </div>
             <q-button @click="popUpClick()" class="item h10">MY QR</q-button>
         </div>
